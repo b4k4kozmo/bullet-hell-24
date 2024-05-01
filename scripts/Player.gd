@@ -18,6 +18,8 @@ func _physics_process(_delta):
 	if health <= 0:
 		debug.text = "dead"
 	velocity = Input.get_vector("ui_left","ui_right","ui_up","ui_down") * speed
+	if Input.is_action_just_pressed("exit"):
+		get_tree().quit()
 	move_and_slide()
 
 func set_status(bullet_type):
