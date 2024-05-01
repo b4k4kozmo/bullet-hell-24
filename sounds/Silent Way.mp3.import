@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dgvucltdl1fhy"
+path="res://.godot/imported/Silent Way.mp3-51b7530e50a95741006d02942c1d311d.mp3str"
+
+[deps]
+
+source_file="res://sounds/Silent Way.mp3"
+dest_files=["res://.godot/imported/Silent Way.mp3-51b7530e50a95741006d02942c1d311d.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

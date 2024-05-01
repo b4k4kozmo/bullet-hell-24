@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://4cqla6d7d6hd"]
+
+[ext_resource type="Script" path="res://scripts/Player.gd" id="1_c71vn"]
+[ext_resource type="Texture2D" uid="uid://dscm1r11eha5e" path="res://sprites/boy_up_2.png" id="2_8itql"]
+[ext_resource type="FontFile" uid="uid://c720lro2tedqy" path="res://fonts/x12y16pxMaruMonica.ttf" id="3_sfhdi"]
+[ext_resource type="FontFile" uid="uid://hjecuot2b4ym" path="res://fonts/Gold Box 8x16 Monospaced.ttf" id="4_uhv3i"]
+[ext_resource type="AudioStream" uid="uid://dt5ngflv4lidb" path="res://sounds/damage.wav" id="5_jick7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2a6o0"]
+size = Vector2(6, 6)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_c71vn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_8itql")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_2a6o0")
+
+[node name="Debug" type="Label" parent="."]
+offset_left = -18.0
+offset_top = -35.0
+offset_right = 22.0
+offset_bottom = -12.0
+scale = Vector2(1.04829, 1.15632)
+theme_override_fonts/font = ExtResource("3_sfhdi")
+text = "Debug"
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(50, 2.08165e-12)
+offset_left = -41.0
+offset_top = 12.0
+offset_right = 59.0
+offset_bottom = 39.0
+scale = Vector2(0.856631, 0.802792)
+theme_override_fonts/font = ExtResource("4_uhv3i")
+value = 100.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_jick7")

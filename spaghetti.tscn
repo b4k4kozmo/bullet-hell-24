@@ -1,0 +1,64 @@
+[gd_scene load_steps=12 format=3 uid="uid://pajd7oo5vays"]
+
+[ext_resource type="Script" path="res://scripts/Spaghetti.gd" id="1_lkdps"]
+[ext_resource type="Texture2D" uid="uid://7l2ts40ltgq4" path="res://sprites/Spagetti.png" id="1_merht"]
+[ext_resource type="PackedScene" uid="uid://comrovgj0rfvd" path="res://bullet.tscn" id="2_43bi4"]
+[ext_resource type="FontFile" uid="uid://c720lro2tedqy" path="res://fonts/x12y16pxMaruMonica.ttf" id="4_d1ppu"]
+[ext_resource type="Script" path="res://scripts/FiniteStateMachine.gd" id="5_o5uh0"]
+[ext_resource type="Script" path="res://scripts/Idle.gd" id="6_jrnrn"]
+[ext_resource type="Script" path="res://scripts/Phase1.gd" id="7_pcn84"]
+[ext_resource type="Script" path="res://scripts/Phase2.gd" id="8_2aneo"]
+[ext_resource type="Script" path="res://scripts/Phase3.gd" id="9_cbupm"]
+[ext_resource type="Script" path="res://scripts/Phase4.gd" id="10_376rk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ikxcq"]
+radius = 195.604
+
+[node name="Spaghetti" type="CharacterBody2D"]
+script = ExtResource("1_lkdps")
+alpha = 3.051
+bullet_node = ExtResource("2_43bi4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_merht")
+
+[node name="Speed" type="Timer" parent="."]
+wait_time = 0.033
+
+[node name="Duration" type="Timer" parent="."]
+wait_time = 7.0
+
+[node name="Debug" type="Label" parent="."]
+offset_left = -18.0
+offset_top = -32.0
+offset_right = 22.0
+offset_bottom = -9.0
+theme_override_fonts/font = ExtResource("4_d1ppu")
+text = "Debug"
+
+[node name="PlayerDetection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
+unique_name_in_owner = true
+shape = SubResource("CircleShape2D_ikxcq")
+
+[node name="FiniteStateMachine" type="Node2D" parent="."]
+script = ExtResource("5_o5uh0")
+
+[node name="Idle" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("6_jrnrn")
+
+[node name="Phase1" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("7_pcn84")
+
+[node name="Phase2" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("8_2aneo")
+
+[node name="Phase3" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("9_cbupm")
+
+[node name="Phase4" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("10_376rk")
+
+[connection signal="timeout" from="Speed" to="." method="_on_speed_timeout"]
+[connection signal="body_entered" from="PlayerDetection" to="FiniteStateMachine/Idle" method="_on_player_entered"]
