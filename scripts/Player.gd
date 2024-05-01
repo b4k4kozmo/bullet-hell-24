@@ -16,6 +16,7 @@ func _physics_process(_delta):
 	if Input.is_action_just_released('walk'):
 		speed = 250
 	if health <= 0:
+		restart()
 		debug.text = "dead"
 	velocity = Input.get_vector("move_left","move_right","move_up","move_down") * speed
 	
