@@ -18,8 +18,13 @@ func _physics_process(_delta):
 	if health <= 0:
 		debug.text = "dead"
 	velocity = Input.get_vector("ui_left","ui_right","ui_up","ui_down") * speed
+	
 	if Input.is_action_just_pressed("exit"):
 		get_tree().quit()
+	
+	if Input.is_action_just_pressed("restart"):
+		restart()
+		
 	move_and_slide()
 
 func set_status(bullet_type):
@@ -63,3 +68,6 @@ func stun():
 	health -= 1
 	await get_tree().create_timer(2.5).timeout
 	speed = 250
+
+func restart():
+	get_tree().reload_current_scene()
