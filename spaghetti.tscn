@@ -23,7 +23,7 @@ bullet_node = ExtResource("2_43bi4")
 texture = ExtResource("1_merht")
 
 [node name="Speed" type="Timer" parent="."]
-wait_time = 0.033
+wait_time = 0.05
 
 [node name="Duration" type="Timer" parent="."]
 wait_time = 7.0
