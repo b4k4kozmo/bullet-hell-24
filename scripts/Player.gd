@@ -17,7 +17,7 @@ func _physics_process(_delta):
 		speed = 250
 	if health <= 0:
 		debug.text = "dead"
-	velocity = Input.get_vector("ui_left","ui_right","ui_up","ui_down") * speed
+	velocity = Input.get_vector("move_left","move_right","move_up","move_down") * speed
 	
 	if Input.is_action_just_pressed("exit"):
 		get_tree().quit()
