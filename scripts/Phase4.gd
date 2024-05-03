@@ -10,4 +10,5 @@ func enter():
 
 func transition():
 	if can_transition:
+		speed.wait_time -= 0.01
 		get_parent().change_state("Phase1")
