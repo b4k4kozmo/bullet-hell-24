@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 var speed = 250
+var cantWalk = false
 @onready var debug = $Debug
 @onready var progress_bar = $ProgressBar
 
@@ -10,11 +11,18 @@ var health = 100:
 		health = value
 		progress_bar.value = value
 
+func _ready():
+	$HitboxDisplay.hide()
+
 func _physics_process(_delta):
 	if Input.is_action_pressed('walk'):
-		speed = 100
+		$HitboxDisplay.show()
+		if not cantWalk:
+			speed = 100
 	if Input.is_action_just_released('walk'):
-		speed = 250
+		if not cantWalk:
+			speed = 250
+		$HitboxDisplay.hide()
 	if health <= 0:
 		restart()
 		debug.text = "dead"
@@ -57,17 +65,21 @@ func poison():
 func slow():
 	debug.text = "slow"
 	$AudioStreamPlayer2D.play()
+	cantWalk = true
 	speed = 50
 	health -= 5
 	await get_tree().create_timer(2.5).timeout
+	cantWalk = false
 	speed = 250
 
 func stun():
 	debug.text = "stun"
 	$AudioStreamPlayer2D.play()
 	speed = 0
+	cantWalk = true
 	health -= 1
 	await get_tree().create_timer(2.5).timeout
+	cantWalk = false
 	speed = 250
 
 func restart():
