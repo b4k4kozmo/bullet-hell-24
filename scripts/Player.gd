@@ -54,6 +54,7 @@ func fire():
 	for i in range(5):
 		health -= 1
 		await get_tree().create_timer(0.5).timeout
+	debug.text = "debug"
 
 func poison():
 	debug.text = "poison"
@@ -61,6 +62,7 @@ func poison():
 	for i in range(5):
 		health -= 2
 		await get_tree().create_timer(1).timeout
+	debug.text = "debug"
 
 func slow():
 	debug.text = "slow"
@@ -71,6 +73,7 @@ func slow():
 	await get_tree().create_timer(2.5).timeout
 	cantWalk = false
 	speed = 250
+	debug.text = "debug"
 
 func stun():
 	debug.text = "stun"
@@ -81,6 +84,7 @@ func stun():
 	await get_tree().create_timer(2.5).timeout
 	cantWalk = false
 	speed = 250
+	debug.text = "debug"
 
 func restart():
 	get_tree().reload_current_scene()
