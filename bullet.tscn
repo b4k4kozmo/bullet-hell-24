@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://comrovgj0rfvd"]
 
 [ext_resource type="Script" path="res://scripts/Bullet.gd" id="1_4tedr"]
-[ext_resource type="Texture2D" uid="uid://di8t5g4jixho2" path="res://sprites/snowball.png" id="1_vtygu"]
-[ext_resource type="Texture2D" uid="uid://dwixajydsfmuh" path="res://sprites/shuriken_down1.png" id="2_2tjs3"]
 [ext_resource type="Texture2D" uid="uid://wjit0n5sxgfk" path="res://sprites/candle.png" id="2_321cf"]
+[ext_resource type="Texture2D" uid="uid://blnf3d6fso1i1" path="res://sprites/ace.png" id="3_4s78l"]
+[ext_resource type="Texture2D" uid="uid://earrg4mbnauq" path="res://sprites/lasso.png" id="4_mklnw"]
 [ext_resource type="Texture2D" uid="uid://cvt636g78sifc" path="res://sprites/coin.png" id="5_lr5dj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uom7v"]
@@ -11,7 +11,7 @@ size = Vector2(6, 6)
 
 [node name="Bullet" type="Area2D"]
 script = ExtResource("1_4tedr")
-texture_array = Array[Texture2D]([ExtResource("2_321cf"), ExtResource("1_vtygu"), ExtResource("2_2tjs3"), ExtResource("5_lr5dj")])
+texture_array = Array[Texture2D]([ExtResource("2_321cf"), ExtResource("3_4s78l"), ExtResource("4_mklnw"), ExtResource("5_lr5dj")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1
