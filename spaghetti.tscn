@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://pajd7oo5vays"]
+[gd_scene load_steps=13 format=3 uid="uid://pajd7oo5vays"]
 
 [ext_resource type="Script" path="res://scripts/Spaghetti.gd" id="1_lkdps"]
 [ext_resource type="Texture2D" uid="uid://7l2ts40ltgq4" path="res://sprites/Spagetti.png" id="1_merht"]
@@ -13,6 +13,8 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ikxcq"]
 radius = 195.604
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mg4nb"]
 
 [node name="Spaghetti" type="CharacterBody2D"]
 script = ExtResource("1_lkdps")
@@ -59,6 +61,18 @@ script = ExtResource("9_cbupm")
 
 [node name="Phase4" type="Node2D" parent="FiniteStateMachine"]
 script = ExtResource("10_376rk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_mg4nb")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(198, 2.08165e-12)
+offset_left = -101.0
+offset_top = -60.0
+offset_right = 97.0
+offset_bottom = -33.0
+max_value = 999.0
+value = 999.0
 
 [connection signal="timeout" from="Speed" to="." method="_on_speed_timeout"]
 [connection signal="body_entered" from="PlayerDetection" to="FiniteStateMachine/Idle" method="_on_player_entered"]

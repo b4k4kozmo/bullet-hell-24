@@ -2,10 +2,19 @@ extends CharacterBody2D
 
 var theta: float = 0.0
 @export_range(0,2*PI) var alpha: float = 0.0
+@export var health = 999
 
 @export var bullet_node: PackedScene
 var bullet_type: int = 0
 
+func _process(_delta):
+	$ProgressBar.value = health
+	if health <= 0:
+		queue_free()
+func set_status(bullet_type):
+	match bullet_type:
+		4:
+			health -= 10
 
 func get_vector(angle):
 	theta = angle + alpha

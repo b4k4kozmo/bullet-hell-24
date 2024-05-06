@@ -10,7 +10,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2a6o0"]
 size = Vector2(4, 4)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_c71vn")
 bullet_node = ExtResource("2_swc88")
 alpha = 3.007
