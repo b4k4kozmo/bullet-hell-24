@@ -15,7 +15,6 @@ func set_status(bullet_type):
 	match bullet_type:
 		4:
 			health -= 10
-			$"../Player".health += 0.5
 func get_vector(angle):
 	theta = angle + alpha
 	return Vector2(cos(theta),sin(theta))
