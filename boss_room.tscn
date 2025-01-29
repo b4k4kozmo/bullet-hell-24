@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://bhryb2orfoclh"]
+[gd_scene load_steps=6 format=3 uid="uid://bhryb2orfoclh"]
 
 [ext_resource type="PackedScene" uid="uid://pajd7oo5vays" path="res://spaghetti.tscn" id="1_s6tax"]
 [ext_resource type="PackedScene" uid="uid://4cqla6d7d6hd" path="res://player.tscn" id="2_7vtuo"]
+[ext_resource type="Script" path="res://spaghetti2.gd" id="2_mstta"]
 [ext_resource type="Texture2D" uid="uid://brj8q14wfmea5" path="res://sprites/IMG_4034.JPG" id="3_phblx"]
+[ext_resource type="Script" path="res://spaghetti3.gd" id="3_rt171"]
 
 [node name="BossRoom" type="Node2D"]
 
@@ -11,8 +13,14 @@ position = Vector2(345, 197)
 alpha = 3.043
 
 [node name="Spaghetti2" parent="." instance=ExtResource("1_s6tax")]
-position = Vector2(345, 228)
-alpha = 3.043
+position = Vector2(367, 228)
+script = ExtResource("2_mstta")
+alpha = 0.0
+
+[node name="Spaghetti3" parent="." instance=ExtResource("1_s6tax")]
+position = Vector2(324, 228)
+script = ExtResource("3_rt171")
+alpha = 0.0
 
 [node name="Player" parent="." instance=ExtResource("2_7vtuo")]
 position = Vector2(606, 40)

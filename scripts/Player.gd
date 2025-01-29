@@ -6,6 +6,7 @@ var cantWalk = false
 @onready var progress_bar = $ProgressBar
 @export var bullet_node: PackedScene
 var bullet_type: int = 4
+var bullet_type2: int = 6
 var theta: float = 0.0
 @export_range(0,2*PI) var alpha: float = 0.0
 
@@ -25,12 +26,14 @@ func shoot(angle):
 	
 	bullet.position = global_position
 	if velocity != Vector2.ZERO:
+		bullet.set_property(bullet_type2)
 		bullet.direction = Vector2.UP
-		$Speed.wait_time = .1
+		$Speed.wait_time = .21
 	else:
+		bullet.set_property(bullet_type)
 		bullet.direction = get_vector(angle)
-		$Speed.wait_time = .025
-	bullet.set_property(bullet_type)
+		$Speed.wait_time = .0444
+	
 	
 	get_tree().current_scene.call_deferred("add_child", bullet)
 

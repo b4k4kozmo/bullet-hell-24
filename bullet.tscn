@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://comrovgj0rfvd"]
+[gd_scene load_steps=10 format=3 uid="uid://comrovgj0rfvd"]
 
 [ext_resource type="Script" path="res://scripts/Bullet.gd" id="1_4tedr"]
 [ext_resource type="Texture2D" uid="uid://wjit0n5sxgfk" path="res://sprites/candle.png" id="2_321cf"]
@@ -6,13 +6,15 @@
 [ext_resource type="Texture2D" uid="uid://earrg4mbnauq" path="res://sprites/lasso.png" id="4_mklnw"]
 [ext_resource type="Texture2D" uid="uid://cvt636g78sifc" path="res://sprites/coin.png" id="5_lr5dj"]
 [ext_resource type="Texture2D" uid="uid://f6my4hvinndh" path="res://sprites/kamibokken.png" id="6_icaaa"]
+[ext_resource type="Texture2D" uid="uid://dwixajydsfmuh" path="res://sprites/shuriken_down1.png" id="6_ug5ci"]
+[ext_resource type="Texture2D" uid="uid://cq3ispglr04be" path="res://sprites/shuriken_down2.png" id="7_y4x8a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uom7v"]
 size = Vector2(6, 6)
 
 [node name="Bullet" type="Area2D"]
 script = ExtResource("1_4tedr")
-texture_array = Array[Texture2D]([ExtResource("2_321cf"), ExtResource("3_4s78l"), ExtResource("4_mklnw"), ExtResource("5_lr5dj"), ExtResource("6_icaaa")])
+texture_array = Array[Texture2D]([ExtResource("2_321cf"), ExtResource("3_4s78l"), ExtResource("4_mklnw"), ExtResource("5_lr5dj"), ExtResource("6_ug5ci"), ExtResource("7_y4x8a"), ExtResource("6_icaaa")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1
@@ -23,5 +25,10 @@ texture = ExtResource("2_321cf")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_uom7v")
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.15
+autostart = true
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

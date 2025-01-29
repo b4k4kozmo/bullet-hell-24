@@ -6,6 +6,7 @@ var theta: float = 0.0
 
 @export var bullet_node: PackedScene
 var bullet_type: int = 0
+var starting_phase = "Phase1"
 
 func _process(_delta):
 	$ProgressBar.value = health
@@ -14,7 +15,27 @@ func _process(_delta):
 func set_status(bullet_type):
 	match bullet_type:
 		4:
-			health -= 10
+			if $"../Player".debug.text == "debug":
+				health -= 8
+			else:
+				health -= 6
+		5:
+			if $"../Player".debug.text == "debug":
+				health -= 6
+				for i in range(4):
+					health -= 1
+					await get_tree().create_timer(1).timeout
+			else:
+				health -= 4
+		6:
+			if $"../Player".health < 100:
+				if $"../Player".debug.text == "debug":
+					health -= 10
+					$"../Player".health += .1
+				else:
+					health -= 8
+			elif $"../Player".health == 100:
+				health -= 12
 func get_vector(angle):
 	theta = angle + alpha
 	return Vector2(cos(theta),sin(theta))

@@ -15,7 +15,15 @@ func _on_screen_exited():
 func set_property(type):
 	bullet_type = type
 	$Sprite2D.texture = texture_array[type]
+	
 
 
 func _on_body_entered(body):
 	body.set_status(bullet_type)
+
+
+func _on_timer_timeout():
+	if bullet_type == 4:
+		set_property(5)
+	elif bullet_type == 5:
+		set_property(4)
