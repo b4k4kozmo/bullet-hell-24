@@ -38,83 +38,83 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("3_phblx")
 
-[node name="Border" type="Sprite2D" parent="."]
+[node name="Borders" type="Node2D" parent="."]
 visible = false
+position = Vector2(345, 197)
+
+[node name="Border" type="Sprite2D" parent="Borders"]
 light_mask = 2
 visibility_layer = 2
-position = Vector2(322.5, 412.458)
+position = Vector2(-22.5, 215.458)
 scale = Vector2(647, 29.0838)
 texture = SubResource("CanvasTexture_ntpr2")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Border"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Borders/Border"]
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Border/StaticBody2D"]
 light_mask = 2
 visibility_layer = 2
 position = Vector2(-0.000772804, 0.00144196)
 scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_bc61q")
 
-[node name="Border2" type="Sprite2D" parent="."]
-visible = false
+[node name="Border2" type="Sprite2D" parent="Borders"]
 light_mask = 2
 visibility_layer = 2
-position = Vector2(322, -11)
+position = Vector2(-23, -208)
 scale = Vector2(647, 29.0838)
 texture = SubResource("CanvasTexture_ntpr2")
 offset = Vector2(0.000772804, 14.4568)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Border2"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Borders/Border2"]
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Border2/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Border2/StaticBody2D"]
 light_mask = 2
 visibility_layer = 2
 position = Vector2(-0.000772804, 0.00144196)
 scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_bc61q")
 
-[node name="Border3" type="Sprite2D" parent="."]
-visible = false
+[node name="Border3" type="Sprite2D" parent="Borders"]
 light_mask = 2
 visibility_layer = 2
-position = Vector2(1082, 164)
+position = Vector2(737, -33)
 rotation = 1.5708
 scale = Vector2(647, 29.0838)
 texture = SubResource("CanvasTexture_ntpr2")
 offset = Vector2(0.000772804, 14.4568)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Border3"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Borders/Border3"]
 position = Vector2(0.0108192, 14.441)
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Border3/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Border3/StaticBody2D"]
 light_mask = 2
 visibility_layer = 2
 position = Vector2(-0.000772804, 0.00144196)
 scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_bc61q")
 
-[node name="Border4" type="Sprite2D" parent="."]
-visible = false
+[node name="Border4" type="Sprite2D" parent="Borders"]
 light_mask = 2
 visibility_layer = 2
-position = Vector2(408, 164)
+position = Vector2(63, -33)
 rotation = 1.5708
 scale = Vector2(647, 29.0838)
 texture = SubResource("CanvasTexture_ntpr2")
 offset = Vector2(0.000772804, 14.4568)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Border4"]
-position = Vector2(0.0108192, 14.441)
+[node name="StaticBody2D" type="StaticBody2D" parent="Borders/Border4"]
+position = Vector2(0.0108192, 14.4754)
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Border4/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Border4/StaticBody2D"]
 light_mask = 2
 visibility_layer = 2
 position = Vector2(-0.000772804, 0.00144196)
