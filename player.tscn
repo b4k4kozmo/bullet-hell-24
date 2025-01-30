@@ -22,13 +22,14 @@ texture = ExtResource("2_8itql")
 shape = SubResource("RectangleShape2D_2a6o0")
 
 [node name="Debug" type="Label" parent="."]
-offset_left = -18.0
+offset_left = -21.0
 offset_top = -35.0
-offset_right = 22.0
+offset_right = 19.0
 offset_bottom = -12.0
 scale = Vector2(1.04829, 1.15632)
 theme_override_fonts/font = ExtResource("3_sfhdi")
 text = "Debug"
+horizontal_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 custom_minimum_size = Vector2(50, 2.08165e-12)

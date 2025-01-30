@@ -31,12 +31,17 @@ wait_time = 0.05
 wait_time = 15.0
 
 [node name="Debug" type="Label" parent="."]
-offset_left = -18.0
-offset_top = -32.0
-offset_right = 22.0
-offset_bottom = -9.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = -34.0
+offset_right = 20.0
+offset_bottom = -11.0
+grow_horizontal = 2
 theme_override_fonts/font = ExtResource("4_d1ppu")
 text = "Debug"
+horizontal_alignment = 1
 
 [node name="PlayerDetection" type="Area2D" parent="."]
 
@@ -67,10 +72,15 @@ shape = SubResource("RectangleShape2D_mg4nb")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 custom_minimum_size = Vector2(198, 2.08165e-12)
-offset_left = -101.0
-offset_top = -60.0
-offset_right = 97.0
-offset_bottom = -33.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -49.0
+offset_right = 141.0
+offset_bottom = -22.0
+grow_horizontal = 2
+scale = Vector2(0.6, 0.6)
 max_value = 999.0
 value = 999.0
 
