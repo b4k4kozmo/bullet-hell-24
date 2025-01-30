@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cq3ispglr04be" path="res://sprites/shuriken_down2.png" id="7_y4x8a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uom7v"]
-size = Vector2(6, 6)
+size = Vector2(4, 4)
 
 [node name="Bullet" type="Area2D"]
 script = ExtResource("1_4tedr")
@@ -29,6 +29,12 @@ shape = SubResource("RectangleShape2D_uom7v")
 wait_time = 0.15
 autostart = true
 
+[node name="DespawnTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_exited"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="DespawnTimer" to="." method="_on_despawn_timer_timeout"]

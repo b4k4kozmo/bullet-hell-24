@@ -16,7 +16,7 @@ radius = 195.604
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mg4nb"]
 
-[node name="Spaghetti" type="CharacterBody2D"]
+[node name="Spaghetti" type="CharacterBody2D" groups=["enemy"]]
 script = ExtResource("1_lkdps")
 alpha = 3.051
 bullet_node = ExtResource("2_43bi4")

@@ -27,15 +27,18 @@ func shoot(angle):
 	bullet.position = global_position
 	if velocity != Vector2.ZERO:
 		bullet.set_property(bullet_type2)
+		bullet.player_spiral_bullet = false
 		bullet.direction = Vector2.UP
 		$Speed.wait_time = .21
 	else:
 		bullet.set_property(bullet_type)
+		bullet.player_spiral_bullet = true
 		bullet.direction = get_vector(angle)
 		$Speed.wait_time = .0444
 	
-	
+	bullet.player_bullet = true
 	get_tree().current_scene.call_deferred("add_child", bullet)
+	
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed('action'):

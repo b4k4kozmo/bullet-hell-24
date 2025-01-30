@@ -46,8 +46,9 @@ func shoot(angle):
 	bullet.position = global_position
 	bullet.direction = get_vector(angle)
 	bullet.set_property(bullet_type)
-	
+	bullet.enemy_bullet = true
 	get_tree().current_scene.call_deferred("add_child", bullet)
+	
 
 
 func _on_speed_timeout():

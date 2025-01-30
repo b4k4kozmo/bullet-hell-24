@@ -57,7 +57,6 @@ collision_mask = 2
 light_mask = 2
 visibility_layer = 2
 position = Vector2(-0.000772804, 0.00144196)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_bc61q")
 
 [node name="Border2" type="Sprite2D" parent="Borders"]
@@ -76,7 +75,6 @@ collision_mask = 2
 light_mask = 2
 visibility_layer = 2
 position = Vector2(-0.000772804, 0.00144196)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_bc61q")
 
 [node name="Border3" type="Sprite2D" parent="Borders"]
@@ -97,7 +95,6 @@ collision_mask = 2
 light_mask = 2
 visibility_layer = 2
 position = Vector2(-0.000772804, 0.00144196)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_bc61q")
 
 [node name="Border4" type="Sprite2D" parent="Borders"]
@@ -118,5 +115,4 @@ collision_mask = 2
 light_mask = 2
 visibility_layer = 2
 position = Vector2(-0.000772804, 0.00144196)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_bc61q")
