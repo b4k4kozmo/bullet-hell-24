@@ -1,10 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://bhryb2orfoclh"]
+[gd_scene load_steps=8 format=3 uid="uid://bhryb2orfoclh"]
 
 [ext_resource type="PackedScene" uid="uid://pajd7oo5vays" path="res://spaghetti.tscn" id="1_s6tax"]
 [ext_resource type="PackedScene" uid="uid://4cqla6d7d6hd" path="res://player.tscn" id="2_7vtuo"]
 [ext_resource type="Script" path="res://spaghetti2.gd" id="2_mstta"]
 [ext_resource type="Texture2D" uid="uid://brj8q14wfmea5" path="res://sprites/IMG_4034.JPG" id="3_phblx"]
 [ext_resource type="Script" path="res://spaghetti3.gd" id="3_rt171"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ntpr2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bc61q"]
+size = Vector2(1.00464, 1.27219)
 
 [node name="BossRoom" type="Node2D"]
 
@@ -24,9 +29,94 @@ alpha = 0.0
 
 [node name="Player" parent="." instance=ExtResource("2_7vtuo")]
 position = Vector2(606, 40)
+collision_layer = 3
+collision_mask = 3
 
 [node name="TextureRect" type="TextureRect" parent="."]
 z_index = -2
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("3_phblx")
+
+[node name="Border" type="Sprite2D" parent="."]
+visible = false
+light_mask = 2
+visibility_layer = 2
+position = Vector2(322.5, 412.458)
+scale = Vector2(647, 29.0838)
+texture = SubResource("CanvasTexture_ntpr2")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Border"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/StaticBody2D"]
+light_mask = 2
+visibility_layer = 2
+position = Vector2(-0.000772804, 0.00144196)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_bc61q")
+
+[node name="Border2" type="Sprite2D" parent="."]
+visible = false
+light_mask = 2
+visibility_layer = 2
+position = Vector2(322, -11)
+scale = Vector2(647, 29.0838)
+texture = SubResource("CanvasTexture_ntpr2")
+offset = Vector2(0.000772804, 14.4568)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Border2"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border2/StaticBody2D"]
+light_mask = 2
+visibility_layer = 2
+position = Vector2(-0.000772804, 0.00144196)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_bc61q")
+
+[node name="Border3" type="Sprite2D" parent="."]
+visible = false
+light_mask = 2
+visibility_layer = 2
+position = Vector2(1082, 164)
+rotation = 1.5708
+scale = Vector2(647, 29.0838)
+texture = SubResource("CanvasTexture_ntpr2")
+offset = Vector2(0.000772804, 14.4568)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Border3"]
+position = Vector2(0.0108192, 14.441)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border3/StaticBody2D"]
+light_mask = 2
+visibility_layer = 2
+position = Vector2(-0.000772804, 0.00144196)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_bc61q")
+
+[node name="Border4" type="Sprite2D" parent="."]
+visible = false
+light_mask = 2
+visibility_layer = 2
+position = Vector2(408, 164)
+rotation = 1.5708
+scale = Vector2(647, 29.0838)
+texture = SubResource("CanvasTexture_ntpr2")
+offset = Vector2(0.000772804, 14.4568)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Border4"]
+position = Vector2(0.0108192, 14.441)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border4/StaticBody2D"]
+light_mask = 2
+visibility_layer = 2
+position = Vector2(-0.000772804, 0.00144196)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_bc61q")
