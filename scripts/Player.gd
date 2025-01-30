@@ -3,7 +3,7 @@ extends CharacterBody2D
 var speed = 250
 var cantWalk = false
 @onready var debug = $Debug
-@onready var progress_bar = $ProgressBar
+@onready var progress_bar = $ProgressBar2
 @export var bullet_node: PackedScene
 var bullet_type: int = 4
 var bullet_type2: int = 6

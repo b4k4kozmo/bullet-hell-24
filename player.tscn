@@ -32,6 +32,7 @@ text = "Debug"
 horizontal_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
 custom_minimum_size = Vector2(50, 2.08165e-12)
 offset_left = -41.0
 offset_top = 12.0
@@ -40,6 +41,24 @@ offset_bottom = 39.0
 scale = Vector2(0.856631, 0.802792)
 theme_override_fonts/font = ExtResource("4_uhv3i")
 value = 100.0
+
+[node name="ProgressBar2" type="ProgressBar" parent="."]
+modulate = Color(0.0117647, 0.929412, 0, 1)
+custom_minimum_size = Vector2(50, 2.08165e-12)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 13.0
+offset_top = -14.0
+offset_right = 113.0
+offset_bottom = 13.0
+grow_horizontal = 2
+scale = Vector2(0.05, 1)
+theme_override_fonts/font = ExtResource("4_uhv3i")
+value = 100.0
+rounded = true
+fill_mode = 3
+show_percentage = false
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_jick7")
