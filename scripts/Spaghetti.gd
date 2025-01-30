@@ -9,7 +9,7 @@ var bullet_type: int = 0
 var starting_phase = "Phase1"
 
 func _process(_delta):
-	$ProgressBar.value = health
+	$ProgressBar2.value = health
 	if health <= 0:
 		queue_free()
 func set_status(bullet_type):
