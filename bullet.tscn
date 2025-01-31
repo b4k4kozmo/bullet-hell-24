@@ -30,7 +30,7 @@ wait_time = 0.15
 autostart = true
 
 [node name="DespawnTimer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.21
 one_shot = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
