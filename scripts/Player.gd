@@ -118,6 +118,8 @@ func stun():
 
 func restart():
 	get_tree().reload_current_scene()
+	Bgm.stream = load("res://sounds/Silent Way.mp3")
+	Bgm.play()
 
 
 func _on_speed_timeout():
