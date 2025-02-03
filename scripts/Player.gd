@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 var speed = 250
+var shuriken_count = 100
 var cantWalk = false
 @onready var debug = $Debug
 @onready var progress_bar = $ProgressBar2
@@ -31,10 +32,14 @@ func shoot(angle):
 		bullet.direction = Vector2.UP
 		$Speed.wait_time = .21
 	else:
-		bullet.set_property(bullet_type)
-		bullet.player_spiral_bullet = true
-		bullet.direction = get_vector(angle)
-		$Speed.wait_time = .0444
+		if shuriken_count > 0:
+			bullet.set_property(bullet_type)
+			bullet.player_spiral_bullet = true
+			bullet.direction = get_vector(angle)
+			$Speed.wait_time = .0444
+			shuriken_count -= 1
+		else:
+			return
 	
 	bullet.player_bullet = true
 	get_tree().current_scene.call_deferred("add_child", bullet)
