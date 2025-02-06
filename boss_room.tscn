@@ -39,7 +39,7 @@ position = Vector2(345, 197)
 [node name="Border" type="Sprite2D" parent="Borders"]
 light_mask = 2
 visibility_layer = 2
-position = Vector2(-22.5, 215.458)
+position = Vector2(-22, 222)
 scale = Vector2(647, 29.0838)
 texture = SubResource("CanvasTexture_ntpr2")
 
@@ -56,7 +56,7 @@ shape = SubResource("RectangleShape2D_bc61q")
 [node name="Border2" type="Sprite2D" parent="Borders"]
 light_mask = 2
 visibility_layer = 2
-position = Vector2(-23, -208)
+position = Vector2(-23, -216)
 scale = Vector2(647, 29.0838)
 texture = SubResource("CanvasTexture_ntpr2")
 offset = Vector2(0.000772804, 14.4568)
@@ -74,7 +74,7 @@ shape = SubResource("RectangleShape2D_bc61q")
 [node name="Border3" type="Sprite2D" parent="Borders"]
 light_mask = 2
 visibility_layer = 2
-position = Vector2(737, -33)
+position = Vector2(742, -33)
 rotation = 1.5708
 scale = Vector2(647, 29.0838)
 texture = SubResource("CanvasTexture_ntpr2")
@@ -94,7 +94,7 @@ shape = SubResource("RectangleShape2D_bc61q")
 [node name="Border4" type="Sprite2D" parent="Borders"]
 light_mask = 2
 visibility_layer = 2
-position = Vector2(63, -33)
+position = Vector2(58, -33)
 rotation = 1.5708
 scale = Vector2(647, 29.0838)
 texture = SubResource("CanvasTexture_ntpr2")

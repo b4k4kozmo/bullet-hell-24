@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 var speed = 250
-var shuriken_count = 100
+var shuriken_count = 255
 var cantWalk = false
 @onready var debug = $Debug
 @onready var progress_bar = $ProgressBar2

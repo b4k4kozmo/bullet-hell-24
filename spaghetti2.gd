@@ -28,6 +28,8 @@ func set_status(bullet_type):
 			else:
 				health -= 4
 		6:
+			if $"../Player".shuriken_count < 255:
+				$"../Player".shuriken_count += 1
 			if $"../Player".health < 100:
 				if $"../Player".debug.text == "debug":
 					health -= 10
