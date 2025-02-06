@@ -81,6 +81,14 @@ func set_status(bullet_type):
 			slow()
 		3:
 			stun()
+		7:
+			$AudioStreamPlayer2D.play()
+			health -= 7
+		8:
+			slow()
+		9:
+			$AudioStreamPlayer2D.play()
+			health += 5
 
 func fire():
 	debug.text = "fire"

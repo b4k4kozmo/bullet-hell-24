@@ -2,11 +2,11 @@ extends CharacterBody2D
 
 var theta: float = 0.0
 @export_range(0,2*PI) var alpha: float = 0.0
-@export var health = 999
+@export var health = 444
 
 @export var bullet_node: PackedScene
 var bullet_type: int = 0
-var starting_phase = "Phase2"
+var starting_phase = "Jackphase1"
 
 func _process(_delta):
 	$ProgressBar2.value = health

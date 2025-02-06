@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://comrovgj0rfvd"]
+[gd_scene load_steps=13 format=3 uid="uid://comrovgj0rfvd"]
 
 [ext_resource type="Script" path="res://scripts/Bullet.gd" id="1_4tedr"]
 [ext_resource type="Texture2D" uid="uid://wjit0n5sxgfk" path="res://sprites/candle.png" id="2_321cf"]
@@ -8,14 +8,16 @@
 [ext_resource type="Texture2D" uid="uid://f6my4hvinndh" path="res://sprites/kamibokken.png" id="6_icaaa"]
 [ext_resource type="Texture2D" uid="uid://dwixajydsfmuh" path="res://sprites/shuriken_down1.png" id="6_ug5ci"]
 [ext_resource type="Texture2D" uid="uid://cq3ispglr04be" path="res://sprites/shuriken_down2.png" id="7_y4x8a"]
+[ext_resource type="Texture2D" uid="uid://na2mk41474kf" path="res://sprites/gem.png" id="9_6fldt"]
 [ext_resource type="Texture2D" uid="uid://di8t5g4jixho2" path="res://sprites/snowball.png" id="9_ytdby"]
+[ext_resource type="Texture2D" uid="uid://buliksyfmel60" path="res://sprites/sando_half.png" id="11_yr5se"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uom7v"]
 size = Vector2(4, 4)
 
 [node name="Bullet" type="Area2D"]
 script = ExtResource("1_4tedr")
-texture_array = Array[Texture2D]([ExtResource("2_321cf"), ExtResource("3_4s78l"), ExtResource("4_mklnw"), ExtResource("5_lr5dj"), ExtResource("6_ug5ci"), ExtResource("7_y4x8a"), ExtResource("6_icaaa"), ExtResource("9_ytdby")])
+texture_array = Array[Texture2D]([ExtResource("2_321cf"), ExtResource("3_4s78l"), ExtResource("4_mklnw"), ExtResource("5_lr5dj"), ExtResource("6_ug5ci"), ExtResource("7_y4x8a"), ExtResource("6_icaaa"), ExtResource("9_6fldt"), ExtResource("9_ytdby"), ExtResource("11_yr5se")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1

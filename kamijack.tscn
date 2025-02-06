@@ -1,0 +1,102 @@
+[gd_scene load_steps=12 format=3 uid="uid://dh4s5ctqeweq6"]
+
+[ext_resource type="Script" path="res://spaghetti2.gd" id="1_6bgo7"]
+[ext_resource type="PackedScene" uid="uid://comrovgj0rfvd" path="res://bullet.tscn" id="2_m4nf5"]
+[ext_resource type="Texture2D" uid="uid://cnxpj2wa0vhcr" path="res://sprites/kamijack_down_1.png" id="3_17oli"]
+[ext_resource type="FontFile" uid="uid://c720lro2tedqy" path="res://fonts/x12y16pxMaruMonica.ttf" id="4_krhc7"]
+[ext_resource type="Script" path="res://scripts/FiniteStateMachine.gd" id="5_i268j"]
+[ext_resource type="Script" path="res://scripts/Idle.gd" id="6_0w4su"]
+[ext_resource type="Script" path="res://Jackphase1.gd" id="7_jpkhd"]
+[ext_resource type="Script" path="res://Jackphase2.gd" id="8_rix2s"]
+[ext_resource type="Script" path="res://Jackphase3.gd" id="9_oidy0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ikxcq"]
+radius = 195.604
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mg4nb"]
+
+[node name="Kamijack" type="CharacterBody2D" groups=["enemy"]]
+position = Vector2(372, 213)
+script = ExtResource("1_6bgo7")
+bullet_node = ExtResource("2_m4nf5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_17oli")
+
+[node name="Speed" type="Timer" parent="."]
+wait_time = 0.15
+
+[node name="Duration" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="Debug" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 16.0
+offset_right = 20.0
+offset_bottom = 39.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("4_krhc7")
+text = "Debug"
+horizontal_alignment = 1
+
+[node name="PlayerDetection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
+unique_name_in_owner = true
+shape = SubResource("CircleShape2D_ikxcq")
+
+[node name="FiniteStateMachine" type="Node2D" parent="."]
+script = ExtResource("5_i268j")
+
+[node name="Idle" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("6_0w4su")
+
+[node name="Jackphase1" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("7_jpkhd")
+
+[node name="Jackphase2" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("8_rix2s")
+
+[node name="Jackphase3" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("9_oidy0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_mg4nb")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
+custom_minimum_size = Vector2(198, 2.08165e-12)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = -49.0
+offset_right = 141.0
+offset_bottom = -22.0
+grow_horizontal = 2
+scale = Vector2(0.6, 0.6)
+max_value = 999.0
+value = 999.0
+
+[node name="ProgressBar2" type="ProgressBar" parent="."]
+modulate = Color(0.892161, 0.0610557, 0.0360141, 1)
+custom_minimum_size = Vector2(198, 2.08165e-12)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.0
+offset_top = -28.0
+offset_right = 173.0
+offset_bottom = -1.0
+grow_horizontal = 2
+scale = Vector2(0.25, 0.4)
+theme_override_constants/outline_size = 1
+max_value = 444.0
+value = 444.0
+show_percentage = false
+
+[connection signal="timeout" from="Speed" to="." method="_on_speed_timeout"]
+[connection signal="body_entered" from="PlayerDetection" to="FiniteStateMachine/Idle" method="_on_player_entered"]
