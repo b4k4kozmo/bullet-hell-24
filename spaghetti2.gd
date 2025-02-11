@@ -11,33 +11,37 @@ var starting_phase = "Jackphase1"
 func _process(_delta):
 	$ProgressBar2.value = health
 	if health <= 0:
+		$"../Player".experience += 7
 		queue_free()
 func set_status(bullet_type):
 	match bullet_type:
-		4:
-			if $"../Player".debug.text == "debug":
-				health -= 8
-			else:
-				health -= 6
-		5:
-			if $"../Player".debug.text == "debug":
-				health -= 6
-				for i in range(4):
-					health -= 1
-					await get_tree().create_timer(1).timeout
-			else:
-				health -= 4
-		6:
-			if $"../Player".shuriken_count < 255:
-				$"../Player".shuriken_count += 1
-			if $"../Player".health < 100:
+			4:
 				if $"../Player".debug.text == "debug":
-					health -= 10
-					$"../Player".health += .1
+					health -= $"../Player".dexterity
 				else:
-					health -= 8
-			elif $"../Player".health == 100:
-				health -= 12
+					health -= ($"../Player".dexterity -2)
+				$AudioStreamPlayer2D.play()
+			5:
+				if $"../Player".debug.text == "debug":
+					health -= ($"../Player".dexterity - 1)
+					for i in range(4):
+						health -= 1
+						await get_tree().create_timer(1).timeout
+				else:
+					health -= $"../Player".dexterity/2
+				$AudioStreamPlayer2D.play()
+			6:
+				if $"../Player".shuriken_count < 100:
+					$"../Player".shuriken_count += 1
+				if $"../Player".health < 100:
+					if $"../Player".debug.text == "debug":
+						health -= $"../Player".power
+						$"../Player".health += .1
+					else:
+						health -= $"../Player".power
+				elif $"../Player".health == 100:
+					health -= $"../Player".power*1.5
+				$AudioStreamPlayer2D.play()
 func get_vector(angle):
 	theta = angle + alpha
 	return Vector2(cos(theta),sin(theta))

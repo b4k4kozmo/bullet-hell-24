@@ -1,21 +1,39 @@
 extends CharacterBody2D
 
 var speed = 250
-var shuriken_count = 255
+
 var cantWalk = false
 @onready var debug = $Debug
 @onready var progress_bar = $ProgressBar2
+@onready var ammo_bar = $ProgressBar3
 @export var bullet_node: PackedScene
 var bullet_type: int = 4
 var bullet_type2: int = 6
 var theta: float = 0.0
 @export_range(0,2*PI) var alpha: float = 0.0
 
-var health = 100:
+var player_level = 1
+var to_next_lvl = 7
+var experience = 0
+var max_hp = 100
+var max_ammo = 255
+
+var sword_speed = .21
+var shuriken_speed = .111
+
+var power = 7
+var dexterity = 7
+
+var health = max_hp:
 	#updates health bar
 	set(value):
 		health = value
 		progress_bar.value = value
+
+var shuriken_count = max_ammo:
+	set(value):
+		shuriken_count = value
+		ammo_bar.value = value
 
 func _ready():
 	$HitboxDisplay.hide()
@@ -30,13 +48,14 @@ func shoot(angle):
 		bullet.set_property(bullet_type2)
 		bullet.player_spiral_bullet = false
 		bullet.direction = Vector2.UP
-		$Speed.wait_time = .21
+		$Speed.wait_time = sword_speed
+		$AudioStreamPlayer2D3.play()
 	else:
 		if shuriken_count > 0:
 			bullet.set_property(bullet_type)
 			bullet.player_spiral_bullet = true
 			bullet.direction = get_vector(angle)
-			$Speed.wait_time = .0444
+			$Speed.wait_time = shuriken_speed
 			shuriken_count -= 1
 		else:
 			return
@@ -63,6 +82,44 @@ func _physics_process(_delta):
 		debug.text = "dead"
 	velocity = Input.get_vector("move_left","move_right","move_up","move_down") * speed
 	
+	#handle level ups
+	#make function later
+	match player_level:
+		1:
+			if experience >= to_next_lvl:
+				$AudioStreamPlayer2D4.play()
+				to_next_lvl *= 1.5
+				player_level = 2
+				health = max_hp
+				shuriken_count = max_ammo
+				sword_speed /= 1.25
+				shuriken_speed /= 1.11
+				dexterity += 1
+				power += 1
+				
+		2:
+			if experience >= to_next_lvl:
+				$AudioStreamPlayer2D4.play()
+				to_next_lvl *= 1.5
+				player_level = 2
+				health = max_hp
+				shuriken_count = max_ammo
+				sword_speed /= 1.25
+				shuriken_speed /= 1.11
+				dexterity += 1
+				power += 1
+		3:
+			if experience >= to_next_lvl:
+				$AudioStreamPlayer2D4.play()
+				to_next_lvl *= 1.5
+				player_level = 2
+				health = max_hp
+				shuriken_count = max_ammo
+				sword_speed /= 1.25
+				shuriken_speed /= 1.11
+				dexterity += 1
+				power += 1
+	
 	if Input.is_action_just_pressed("exit"):
 		get_tree().quit()
 	
@@ -87,7 +144,7 @@ func set_status(bullet_type):
 		8:
 			slow()
 		9:
-			$AudioStreamPlayer2D.play()
+			$AudioStreamPlayer2D2.play()
 			health += 5
 
 func fire():

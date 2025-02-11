@@ -8,4 +8,5 @@ func enter():
 
 func transition():
 	if can_transition:
+		$"../AudioStreamPlayer2D".play()
 		get_parent().change_state("Phase3")

@@ -15,3 +15,4 @@ func _on_player_entered(body):
 func transition():
 	if player_entered:
 		get_parent().change_state($"../..".starting_phase)
+		$"../AudioStreamPlayer2D".play()

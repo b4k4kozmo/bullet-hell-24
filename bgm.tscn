@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://rmm84nr5siwn"]
 
-[ext_resource type="AudioStream" uid="uid://dgvucltdl1fhy" path="res://sounds/Silent Way.mp3" id="1_uschs"]
+[ext_resource type="AudioStream" uid="uid://br63rgg08mslt" path="res://sounds/cloud9001.wav" id="1_dxmxl"]
 
 [node name="BGM" type="AudioStreamPlayer"]
-stream = ExtResource("1_uschs")
+stream = ExtResource("1_dxmxl")
 volume_db = -10.0
 autoplay = true

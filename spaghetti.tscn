@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://pajd7oo5vays"]
+[gd_scene load_steps=16 format=3 uid="uid://pajd7oo5vays"]
 
 [ext_resource type="Script" path="res://scripts/Spaghetti.gd" id="1_lkdps"]
 [ext_resource type="Texture2D" uid="uid://7l2ts40ltgq4" path="res://sprites/Spagetti.png" id="1_merht"]
@@ -10,6 +10,9 @@
 [ext_resource type="Script" path="res://scripts/Phase2.gd" id="8_2aneo"]
 [ext_resource type="Script" path="res://scripts/Phase3.gd" id="9_cbupm"]
 [ext_resource type="Script" path="res://scripts/Phase4.gd" id="10_376rk"]
+[ext_resource type="AudioStream" uid="uid://b8ddec0mt3xba" path="res://sounds/cos_yipee.wav" id="11_2u8se"]
+[ext_resource type="AudioStream" uid="uid://cj51520ntupcj" path="res://sounds/jump_land.wav" id="12_pv0ev"]
+[ext_resource type="AudioStream" uid="uid://dtor7m7cws2s4" path="res://sounds/fanfare.wav" id="13_qd4lj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ikxcq"]
 radius = 195.604
@@ -31,6 +34,7 @@ wait_time = 0.05
 wait_time = 15.0
 
 [node name="Debug" type="Label" parent="."]
+visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -67,6 +71,11 @@ script = ExtResource("9_cbupm")
 [node name="Phase4" type="Node2D" parent="FiniteStateMachine"]
 script = ExtResource("10_376rk")
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="FiniteStateMachine"]
+stream = ExtResource("11_2u8se")
+volume_db = 3.0
+pitch_scale = 1.34
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_mg4nb")
 
@@ -101,6 +110,14 @@ theme_override_constants/outline_size = 1
 max_value = 999.0
 value = 999.0
 show_percentage = false
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_pv0ev")
+volume_db = 7.0
+
+[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_qd4lj")
+volume_db = 3.0
 
 [connection signal="timeout" from="Speed" to="." method="_on_speed_timeout"]
 [connection signal="body_entered" from="PlayerDetection" to="FiniteStateMachine/Idle" method="_on_player_entered"]

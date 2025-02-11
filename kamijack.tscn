@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dh4s5ctqeweq6"]
+[gd_scene load_steps=14 format=3 uid="uid://dh4s5ctqeweq6"]
 
 [ext_resource type="Script" path="res://spaghetti2.gd" id="1_6bgo7"]
 [ext_resource type="PackedScene" uid="uid://comrovgj0rfvd" path="res://bullet.tscn" id="2_m4nf5"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://Jackphase1.gd" id="7_jpkhd"]
 [ext_resource type="Script" path="res://Jackphase2.gd" id="8_rix2s"]
 [ext_resource type="Script" path="res://Jackphase3.gd" id="9_oidy0"]
+[ext_resource type="AudioStream" uid="uid://dry03swsw8qoa" path="res://sounds/cos_spotted3.wav" id="10_65po4"]
+[ext_resource type="AudioStream" uid="uid://cj51520ntupcj" path="res://sounds/jump_land.wav" id="11_3ihcg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ikxcq"]
 radius = 195.604
@@ -24,12 +26,13 @@ bullet_node = ExtResource("2_m4nf5")
 texture = ExtResource("3_17oli")
 
 [node name="Speed" type="Timer" parent="."]
-wait_time = 0.15
+wait_time = 0.1
 
 [node name="Duration" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 3.0
 
 [node name="Debug" type="Label" parent="."]
+visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -62,6 +65,11 @@ script = ExtResource("8_rix2s")
 
 [node name="Jackphase3" type="Node2D" parent="FiniteStateMachine"]
 script = ExtResource("9_oidy0")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="FiniteStateMachine"]
+stream = ExtResource("10_65po4")
+volume_db = 3.0
+pitch_scale = 0.78
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_mg4nb")
@@ -97,6 +105,10 @@ theme_override_constants/outline_size = 1
 max_value = 444.0
 value = 444.0
 show_percentage = false
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_3ihcg")
+volume_db = 7.0
 
 [connection signal="timeout" from="Speed" to="." method="_on_speed_timeout"]
 [connection signal="body_entered" from="PlayerDetection" to="FiniteStateMachine/Idle" method="_on_player_entered"]
