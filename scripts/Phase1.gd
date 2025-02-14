@@ -6,8 +6,8 @@ func enter():
 	owner.bullet_type = 0
 	speed.start()
 	$"../AudioStreamPlayer2D".play()
-	if Bgm.stream != load("res://sounds/Dreaming through the Jungle.mp3"):
-		Bgm.stream = load("res://sounds/Dreaming through the Jungle.mp3")
+	if Bgm.stream != load("res://sounds/loop_nice.wav"):
+		Bgm.stream = load("res://sounds/loop_nice.wav")
 		Bgm.play()
 
 func transition():

@@ -14,7 +14,7 @@ func _add_a_scene_manually():
 func _process(delta):
 	#get_tree().change_scene_to_file(boss_room)
 	if Input.is_action_just_pressed("action"):
-		Bgm.stream = load("res://sounds/katsuboy_nightcore.wav")
+		Bgm.stream = load("res://sounds/KatsuBoySong.wav")
 		Bgm.play()
 		_add_a_scene_manually()
 

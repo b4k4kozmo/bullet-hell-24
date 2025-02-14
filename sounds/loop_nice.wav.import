@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dcqtv8jwe18v7"
-path="res://.godot/imported/KatsuBoySong.wav-7099edf8f4f8d597b9e26dd7e41b61cf.sample"
+uid="uid://bqmcjc3ehplqg"
+path="res://.godot/imported/loop_nice.wav-7acc50614abf193f451db5bb5712e6ff.sample"
 
 [deps]
 
-source_file="res://sounds/KatsuBoySong.wav"
-dest_files=["res://.godot/imported/KatsuBoySong.wav-7099edf8f4f8d597b9e26dd7e41b61cf.sample"]
+source_file="res://sounds/loop_nice.wav"
+dest_files=["res://.godot/imported/loop_nice.wav-7acc50614abf193f451db5bb5712e6ff.sample"]
 
 [params]
 
