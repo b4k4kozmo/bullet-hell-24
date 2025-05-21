@@ -1,9 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://bhryb2orfoclh"]
+[gd_scene load_steps=10 format=3 uid="uid://bhryb2orfoclh"]
 
 [ext_resource type="PackedScene" uid="uid://pajd7oo5vays" path="res://spaghetti.tscn" id="1_s6tax"]
 [ext_resource type="PackedScene" uid="uid://dh4s5ctqeweq6" path="res://kamijack.tscn" id="2_2fwpo"]
 [ext_resource type="PackedScene" uid="uid://4cqla6d7d6hd" path="res://player.tscn" id="2_7vtuo"]
 [ext_resource type="Texture2D" uid="uid://brj8q14wfmea5" path="res://sprites/IMG_4034.JPG" id="3_phblx"]
+[ext_resource type="PackedScene" uid="uid://dwukjmy1xvqlp" path="res://snowman.tscn" id="5_m2ex5"]
+[ext_resource type="PackedScene" uid="uid://cd2ttpopd4b0b" path="res://frogoblin.tscn" id="6_l6v35"]
+[ext_resource type="PackedScene" uid="uid://comrovgj0rfvd" path="res://bullet.tscn" id="7_e6x0d"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ntpr2"]
 
@@ -111,3 +114,10 @@ light_mask = 2
 visibility_layer = 2
 position = Vector2(-0.000772804, 0.00144196)
 shape = SubResource("RectangleShape2D_bc61q")
+
+[node name="Snowman" parent="." instance=ExtResource("5_m2ex5")]
+position = Vector2(525, 114)
+
+[node name="Frogoblin" parent="." instance=ExtResource("6_l6v35")]
+position = Vector2(86, 81)
+bullet_node = ExtResource("7_e6x0d")

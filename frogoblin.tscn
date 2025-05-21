@@ -1,29 +1,26 @@
-[gd_scene load_steps=14 format=3 uid="uid://dh4s5ctqeweq6"]
+[gd_scene load_steps=13 format=3 uid="uid://cd2ttpopd4b0b"]
 
-[ext_resource type="Script" uid="uid://bhh3e3b11rar1" path="res://spaghetti2.gd" id="1_6bgo7"]
-[ext_resource type="PackedScene" uid="uid://comrovgj0rfvd" path="res://bullet.tscn" id="2_m4nf5"]
-[ext_resource type="Texture2D" uid="uid://cnxpj2wa0vhcr" path="res://sprites/kamijack_down_1.png" id="3_17oli"]
-[ext_resource type="FontFile" uid="uid://c720lro2tedqy" path="res://fonts/x12y16pxMaruMonica.ttf" id="4_krhc7"]
-[ext_resource type="Script" uid="uid://cfelah6qey42h" path="res://scripts/FiniteStateMachine.gd" id="5_i268j"]
-[ext_resource type="Script" uid="uid://crc4pjvum6k86" path="res://scripts/Idle.gd" id="6_0w4su"]
-[ext_resource type="Script" uid="uid://ba61cpfilyyog" path="res://Jackphase1.gd" id="7_jpkhd"]
-[ext_resource type="Script" uid="uid://eqd1v47towyi" path="res://Snowphase1.gd" id="8_pa5uc"]
-[ext_resource type="Script" uid="uid://b5nmjfosuf2nd" path="res://Jackphase3.gd" id="9_oidy0"]
-[ext_resource type="AudioStream" uid="uid://dry03swsw8qoa" path="res://sounds/cos_spotted3.wav" id="10_65po4"]
-[ext_resource type="AudioStream" uid="uid://cj51520ntupcj" path="res://sounds/jump_land.wav" id="11_3ihcg"]
+[ext_resource type="Script" uid="uid://v3vlqbv4v0cv" path="res://frogoblin.gd" id="1_j6dq2"]
+[ext_resource type="Texture2D" uid="uid://u064yistw15u" path="res://sprites/frogoblin.png" id="2_47k2i"]
+[ext_resource type="FontFile" uid="uid://c720lro2tedqy" path="res://fonts/x12y16pxMaruMonica.ttf" id="3_02yod"]
+[ext_resource type="Script" uid="uid://cfelah6qey42h" path="res://scripts/FiniteStateMachine.gd" id="4_qipxq"]
+[ext_resource type="Script" uid="uid://crc4pjvum6k86" path="res://scripts/Idle.gd" id="5_u7xmb"]
+[ext_resource type="Script" uid="uid://ba61cpfilyyog" path="res://Jackphase1.gd" id="6_or1of"]
+[ext_resource type="Script" uid="uid://2ksx7ej713y2" path="res://frogphase1.gd" id="7_ktkg7"]
+[ext_resource type="Script" uid="uid://b5nmjfosuf2nd" path="res://Jackphase3.gd" id="8_c2vo8"]
+[ext_resource type="AudioStream" uid="uid://dry03swsw8qoa" path="res://sounds/cos_spotted3.wav" id="9_f18ib"]
+[ext_resource type="AudioStream" uid="uid://cj51520ntupcj" path="res://sounds/jump_land.wav" id="10_df4ah"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ikxcq"]
 radius = 195.604
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mg4nb"]
 
-[node name="Kamijack" type="CharacterBody2D" groups=["enemy"]]
-position = Vector2(372, 213)
-script = ExtResource("1_6bgo7")
-bullet_node = ExtResource("2_m4nf5")
+[node name="Frogoblin" type="CharacterBody2D" groups=["enemy"]]
+script = ExtResource("1_j6dq2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_17oli")
+texture = ExtResource("2_47k2i")
 
 [node name="Speed" type="Timer" parent="."]
 wait_time = 0.1
@@ -41,7 +38,7 @@ offset_top = 16.0
 offset_right = 20.0
 offset_bottom = 39.0
 grow_horizontal = 2
-theme_override_fonts/font = ExtResource("4_krhc7")
+theme_override_fonts/font = ExtResource("3_02yod")
 text = "Debug"
 horizontal_alignment = 1
 
@@ -52,22 +49,22 @@ unique_name_in_owner = true
 shape = SubResource("CircleShape2D_ikxcq")
 
 [node name="FiniteStateMachine" type="Node2D" parent="."]
-script = ExtResource("5_i268j")
+script = ExtResource("4_qipxq")
 
 [node name="Idle" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("6_0w4su")
+script = ExtResource("5_u7xmb")
 
 [node name="Jackphase1" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("7_jpkhd")
+script = ExtResource("6_or1of")
 
-[node name="Jackphase2" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("8_pa5uc")
+[node name="Frogphase1" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("7_ktkg7")
 
 [node name="Jackphase3" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("9_oidy0")
+script = ExtResource("8_c2vo8")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="FiniteStateMachine"]
-stream = ExtResource("10_65po4")
+stream = ExtResource("9_f18ib")
 volume_db = 3.0
 pitch_scale = 0.78
 
@@ -108,7 +105,7 @@ show_percentage = false
 metadata/_edit_use_anchors_ = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("11_3ihcg")
+stream = ExtResource("10_df4ah")
 volume_db = 7.0
 
 [connection signal="timeout" from="Speed" to="." method="_on_speed_timeout"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://4cqla6d7d6hd"]
 
-[ext_resource type="Script" path="res://scripts/Player.gd" id="1_c71vn"]
+[ext_resource type="Script" uid="uid://cntl84y6rn0xh" path="res://scripts/Player.gd" id="1_c71vn"]
 [ext_resource type="Texture2D" uid="uid://dscm1r11eha5e" path="res://sprites/boy_up_2.png" id="2_8itql"]
 [ext_resource type="PackedScene" uid="uid://comrovgj0rfvd" path="res://bullet.tscn" id="2_swc88"]
 [ext_resource type="FontFile" uid="uid://c720lro2tedqy" path="res://fonts/x12y16pxMaruMonica.ttf" id="3_sfhdi"]

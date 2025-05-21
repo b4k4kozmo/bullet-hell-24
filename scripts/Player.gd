@@ -146,6 +146,8 @@ func set_status(bullet_type):
 		9:
 			$AudioStreamPlayer2D2.play()
 			health += 5
+		10:
+			poison()
 
 func fire():
 	debug.text = "fire"
