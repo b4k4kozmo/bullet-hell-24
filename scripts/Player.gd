@@ -27,11 +27,13 @@ var dexterity = 7
 var health = max_hp:
 	#updates health bar
 	set(value):
+		progress_bar.max_value = max_hp
 		health = value
 		progress_bar.value = value
 
 var shuriken_count = max_ammo:
 	set(value):
+		ammo_bar.max_value = max_ammo
 		shuriken_count = value
 		ammo_bar.value = value
 
@@ -65,6 +67,7 @@ func shoot(angle):
 	
 
 func _physics_process(_delta):
+	$level.text = str(player_level)
 	if Input.is_action_just_pressed('action'):
 		$Speed.start()
 	if Input.is_action_just_released("action"):
@@ -84,36 +87,15 @@ func _physics_process(_delta):
 	
 	#handle level ups
 	#make function later
-	match player_level:
-		1:
-			if experience >= to_next_lvl:
+	if experience >= to_next_lvl:
 				$AudioStreamPlayer2D4.play()
 				to_next_lvl *= 1.5
-				player_level = 2
-				health = max_hp
-				shuriken_count = max_ammo
-				sword_speed /= 1.25
-				shuriken_speed /= 1.11
-				dexterity += 1
-				power += 1
-				
-		2:
-			if experience >= to_next_lvl:
-				$AudioStreamPlayer2D4.play()
-				to_next_lvl *= 1.5
-				player_level = 2
-				health = max_hp
-				shuriken_count = max_ammo
-				sword_speed /= 1.25
-				shuriken_speed /= 1.11
-				dexterity += 1
-				power += 1
-		3:
-			if experience >= to_next_lvl:
-				$AudioStreamPlayer2D4.play()
-				to_next_lvl *= 1.5
-				player_level = 2
-				health = max_hp
+				player_level += 1
+				max_hp += player_level
+				health += max_hp/4
+				if health > max_hp:
+					health = max_hp
+				max_ammo += player_level
 				shuriken_count = max_ammo
 				sword_speed /= 1.25
 				shuriken_speed /= 1.11
@@ -141,6 +123,7 @@ func set_status(bullet_type):
 		7:
 			$AudioStreamPlayer2D.play()
 			health -= 7
+			experience += 4
 		8:
 			slow()
 		9:

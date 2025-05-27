@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var theta: float = 0.0
 @export_range(0,2*PI) var alpha: float = 0.0
-@export var health = 444
+@export var health = 250
 
 @export var bullet_node: PackedScene
 var bullet_type: int = 10

@@ -5,7 +5,7 @@
 [ext_resource type="FontFile" uid="uid://c720lro2tedqy" path="res://fonts/x12y16pxMaruMonica.ttf" id="3_02yod"]
 [ext_resource type="Script" uid="uid://cfelah6qey42h" path="res://scripts/FiniteStateMachine.gd" id="4_qipxq"]
 [ext_resource type="Script" uid="uid://crc4pjvum6k86" path="res://scripts/Idle.gd" id="5_u7xmb"]
-[ext_resource type="Script" uid="uid://ba61cpfilyyog" path="res://Jackphase1.gd" id="6_or1of"]
+[ext_resource type="Script" uid="uid://kkdi6eoaa8s6" path="res://Frogphase2.gd" id="7_j6dq2"]
 [ext_resource type="Script" uid="uid://2ksx7ej713y2" path="res://frogphase1.gd" id="7_ktkg7"]
 [ext_resource type="Script" uid="uid://b5nmjfosuf2nd" path="res://Jackphase3.gd" id="8_c2vo8"]
 [ext_resource type="AudioStream" uid="uid://dry03swsw8qoa" path="res://sounds/cos_spotted3.wav" id="9_f18ib"]
@@ -23,10 +23,10 @@ script = ExtResource("1_j6dq2")
 texture = ExtResource("2_47k2i")
 
 [node name="Speed" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.05
 
 [node name="Duration" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 0.5
 
 [node name="Debug" type="Label" parent="."]
 visible = false
@@ -54,11 +54,11 @@ script = ExtResource("4_qipxq")
 [node name="Idle" type="Node2D" parent="FiniteStateMachine"]
 script = ExtResource("5_u7xmb")
 
-[node name="Jackphase1" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("6_or1of")
-
 [node name="Frogphase1" type="Node2D" parent="FiniteStateMachine"]
 script = ExtResource("7_ktkg7")
+
+[node name="Frogphase2" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("7_j6dq2")
 
 [node name="Jackphase3" type="Node2D" parent="FiniteStateMachine"]
 script = ExtResource("8_c2vo8")
