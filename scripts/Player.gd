@@ -126,7 +126,7 @@ func _physics_process(_delta):
 				power += 1
 	
 	if Input.is_action_just_pressed("exit"):
-		get_tree().quit()
+		_exit_pressed()
 	
 	if Input.is_action_just_pressed("restart"):
 		restart()
@@ -193,6 +193,19 @@ func stun():
 	cantWalk = false
 	speed = 250
 	debug.text = "debug"
+
+## Esc. Quitting is meaningless in a browser - it leaves a dead canvas the
+## visitor cannot recover from without reloading the page - so on web it backs
+## out to the title screen instead.
+func _exit_pressed() -> void:
+	if OS.has_feature("web"):
+		get_tree().paused = false
+		Bgm.stream = load("res://sounds/KatsuBoySong.wav")
+		Bgm.play()
+		get_tree().change_scene_to_file("res://title.tscn")
+	else:
+		get_tree().quit()
+
 
 func restart():
 	get_tree().paused = false
