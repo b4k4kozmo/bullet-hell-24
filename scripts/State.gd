@@ -1,36 +1,37 @@
 extends Node2D
 class_name State
 
-#fetch these nodes
-@onready var debug = owner.find_child("Debug")
-@onready var player = owner.get_parent().find_child("Player")
-@onready var speed = owner.find_child("Speed")
-@onready var duration = owner.find_child("Duration")
+@onready var debug: Label = owner.find_child("Debug")
+@onready var speed: Timer = owner.find_child("Speed")
+@onready var duration: Timer = owner.find_child("Duration")
 
-var can_transition: bool = false
+var can_transition := false
 
-func _ready():
+
+func _ready() -> void:
 	set_physics_process(false)
 	duration.timeout.connect(_on_duration_timeout)
 
-func _on_duration_timeout():
+
+func _on_duration_timeout() -> void:
 	can_transition = true
 
 
-func enter():
+func enter() -> void:
 	set_physics_process(true)
 	can_transition = false
 	duration.start()
 
 
-func exit():
+func exit() -> void:
 	set_physics_process(false)
 
 
-func transition():
+func transition() -> void:
 	pass
 
 
-func _physics_process(delta):
+func _physics_process(_delta: float) -> void:
 	transition()
-	debug.text = name
+	if debug:
+		debug.text = name

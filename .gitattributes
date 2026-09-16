@@ -1,2 +1,21 @@
-# Normalize EOL for all files that Git considers text files.
 * text=auto eol=lf
+
+# Binary assets - never diff or merge these
+*.png    binary
+*.PNG    binary
+*.JPG    binary
+*.jpg    binary
+*.gif    binary
+*.wav    binary
+*.mp3    binary
+*.ogg    binary
+*.ttf    binary
+*.exe    binary
+*.pck    binary
+*.zip    binary
+*.wasm   binary
+
+# Godot scene/resource files are text but must not be merged automatically
+*.tscn   -merge
+*.tres   -merge
+*.import -merge

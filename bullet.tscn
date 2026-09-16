@@ -24,7 +24,7 @@ texture_array = Array[Texture2D]([ExtResource("2_321cf"), ExtResource("3_4s78l")
 z_index = -1
 texture = ExtResource("2_321cf")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_uom7v")
@@ -33,12 +33,16 @@ shape = SubResource("RectangleShape2D_uom7v")
 wait_time = 0.15
 autostart = true
 
+[node name="Lifetime" type="Timer" parent="."]
+one_shot = true
+
 [node name="DespawnTimer" type="Timer" parent="."]
 wait_time = 0.21
 one_shot = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_exited"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]
 [connection signal="timeout" from="DespawnTimer" to="." method="_on_despawn_timer_timeout"]

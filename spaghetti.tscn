@@ -1,18 +1,15 @@
-[gd_scene load_steps=16 format=3 uid="uid://pajd7oo5vays"]
+[gd_scene load_steps=9 format=3 uid="uid://pajd7oo5vays"]
 
-[ext_resource type="Script" uid="uid://8eru8klif56v" path="res://scripts/Spaghetti.gd" id="1_lkdps"]
-[ext_resource type="Texture2D" uid="uid://7l2ts40ltgq4" path="res://sprites/Spagetti.png" id="1_merht"]
-[ext_resource type="PackedScene" uid="uid://comrovgj0rfvd" path="res://bullet.tscn" id="2_43bi4"]
-[ext_resource type="FontFile" uid="uid://c720lro2tedqy" path="res://fonts/x12y16pxMaruMonica.ttf" id="4_d1ppu"]
-[ext_resource type="Script" uid="uid://cfelah6qey42h" path="res://scripts/FiniteStateMachine.gd" id="5_o5uh0"]
-[ext_resource type="Script" uid="uid://crc4pjvum6k86" path="res://scripts/Idle.gd" id="6_jrnrn"]
-[ext_resource type="Script" uid="uid://cak8o2kuchtge" path="res://scripts/Phase1.gd" id="7_pcn84"]
-[ext_resource type="Script" uid="uid://d06xv6y6m1uhe" path="res://scripts/Phase2.gd" id="8_2aneo"]
-[ext_resource type="Script" uid="uid://dmhao18shoxo6" path="res://scripts/Phase3.gd" id="9_cbupm"]
-[ext_resource type="Script" uid="uid://daqbimm5k5ds4" path="res://scripts/Phase4.gd" id="10_376rk"]
-[ext_resource type="AudioStream" uid="uid://b8ddec0mt3xba" path="res://sounds/cos_yipee.wav" id="11_2u8se"]
-[ext_resource type="AudioStream" uid="uid://cj51520ntupcj" path="res://sounds/jump_land.wav" id="12_pv0ev"]
-[ext_resource type="AudioStream" uid="uid://dtor7m7cws2s4" path="res://sounds/fanfare.wav" id="13_qd4lj"]
+[ext_resource type="Script" path="res://scripts/Boss.gd" id="boss"]
+[ext_resource type="Script" path="res://scripts/BossFSM.gd" id="bossfsm"]
+[ext_resource type="Script" path="res://scripts/BossPhase.gd" id="bossphase"]
+[ext_resource type="Script" path="res://scripts/Idle.gd" id="idle"]
+[ext_resource type="PackedScene" uid="uid://comrovgj0rfvd" path="res://bullet.tscn" id="bullet"]
+[ext_resource type="Texture2D" uid="uid://7l2ts40ltgq4" path="res://sprites/Spagetti.png" id="sprite"]
+[ext_resource type="FontFile" uid="uid://c720lro2tedqy" path="res://fonts/x12y16pxMaruMonica.ttf" id="font"]
+[ext_resource type="AudioStream" uid="uid://b8ddec0mt3xba" path="res://sounds/cos_yipee.wav" id="detect_sfx"]
+[ext_resource type="AudioStream" uid="uid://cj51520ntupcj" path="res://sounds/jump_land.wav" id="hit_sfx"]
+[ext_resource type="AudioStream" uid="uid://bqmcjc3ehplqg" path="res://sounds/loop_nice.wav" id="bgm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ikxcq"]
 radius = 195.604
@@ -20,12 +17,14 @@ radius = 195.604
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mg4nb"]
 
 [node name="Spaghetti" type="CharacterBody2D" groups=["enemy"]]
-script = ExtResource("1_lkdps")
+script = ExtResource("boss")
+max_health = 999
+xp_reward = 21
+bullet_node = ExtResource("bullet")
 alpha = 3.051
-bullet_node = ExtResource("2_43bi4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_merht")
+texture = ExtResource("sprite")
 
 [node name="Speed" type="Timer" parent="."]
 wait_time = 0.05
@@ -43,7 +42,7 @@ offset_top = 16.0
 offset_right = 20.0
 offset_bottom = 39.0
 grow_horizontal = 2
-theme_override_fonts/font = ExtResource("4_d1ppu")
+theme_override_fonts/font = ExtResource("font")
 text = "Debug"
 horizontal_alignment = 1
 
@@ -54,45 +53,53 @@ unique_name_in_owner = true
 shape = SubResource("CircleShape2D_ikxcq")
 
 [node name="FiniteStateMachine" type="Node2D" parent="."]
-script = ExtResource("5_o5uh0")
+script = ExtResource("bossfsm")
+initial_phase = NodePath("Phase1")
 
 [node name="Idle" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("6_jrnrn")
+script = ExtResource("idle")
 
 [node name="Phase1" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("7_pcn84")
+script = ExtResource("bossphase")
+alpha = 0.111
+bullet_type = 0
+fire_rate = 0.05
+phase_duration = 15.0
+next_phase = NodePath("Phase2")
+music = ExtResource("bgm")
 
 [node name="Phase2" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("8_2aneo")
+script = ExtResource("bossphase")
+alpha = 1.776
+bullet_type = 1
+fire_rate = 0.05
+phase_duration = 15.0
+next_phase = NodePath("Phase3")
 
 [node name="Phase3" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("9_cbupm")
+script = ExtResource("bossphase")
+alpha = 4.0
+bullet_type = 2
+fire_rate = 0.05
+phase_duration = 15.0
+next_phase = NodePath("Phase4")
 
 [node name="Phase4" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("10_376rk")
+script = ExtResource("bossphase")
+alpha = 3.0
+bullet_type = 3
+fire_rate = 0.05
+phase_duration = 15.0
+next_phase = NodePath("Phase1")
+escalate_on_exit = 0.5
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="FiniteStateMachine"]
-stream = ExtResource("11_2u8se")
+stream = ExtResource("detect_sfx")
 volume_db = 3.0
 pitch_scale = 1.34
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_mg4nb")
-
-[node name="ProgressBar" type="ProgressBar" parent="."]
-visible = false
-custom_minimum_size = Vector2(198, 2.08165e-12)
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -57.0
-offset_top = -49.0
-offset_right = 141.0
-offset_bottom = -22.0
-grow_horizontal = 2
-scale = Vector2(0.6, 0.6)
-max_value = 999.0
-value = 999.0
 
 [node name="ProgressBar2" type="ProgressBar" parent="."]
 modulate = Color(0.892161, 0.0610557, 0.0360141, 1)
@@ -112,12 +119,8 @@ value = 999.0
 show_percentage = false
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("12_pv0ev")
+stream = ExtResource("hit_sfx")
 volume_db = 7.0
-
-[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("13_qd4lj")
-volume_db = 3.0
 
 [connection signal="timeout" from="Speed" to="." method="_on_speed_timeout"]
 [connection signal="body_entered" from="PlayerDetection" to="FiniteStateMachine/Idle" method="_on_player_entered"]

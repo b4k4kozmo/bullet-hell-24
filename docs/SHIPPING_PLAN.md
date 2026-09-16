@@ -3,6 +3,11 @@
 Analysis date: 2026-09-16 · HEAD at time of writing: `a7363a9` "added frogoblins"
 Engine: Godot 4.4 (Forward+) · ~780 lines of GDScript · 41 commits, 2024-05-01 → 2025-05-27
 
+> **Status:** Phase 0, Phase 1 and the difficulty ladder are implemented, and the
+> Web export is fixed and verified running in a browser. Items are marked
+> **[DONE]** below as they land. The headline gap is still **B1 — no win
+> condition**.
+
 Every claim below was verified by importing the project in Godot 4.4 headless and
 running probes against the real scene tree, not by reading code alone.
 
@@ -101,21 +106,21 @@ this instance.
 The game cannot be completed. This is the single biggest gap between "tech demo"
 and "game".
 
-**B2 — Kamijack is missing phase 2.** `kamijack.tscn`'s `Jackphase2` node runs
+**B2 — Kamijack is missing phase 2.** **[DONE]** `kamijack.tscn`'s `Jackphase2` node runs
 `Snowphase1.gd`, which tries to transition to a node named `"Snowphase 1"` that
 does not exist on Kamijack. The node is currently unreachable so it doesn't
 crash — but it is a live crash waiting for anyone who rewires that boss.
 
-**B3 — The Snowman is a static turret.** Its only reachable state is
+**B3 — The Snowman is a static turret.** **[DONE]** Its only reachable state is
 `Snowphase 1`, whose `transition()` is `pass`. It never changes phase, ever. Its
 `Jackphase1` and `Jackphase3` nodes are unreachable dead weight. Its node name
 also contains a space (`"Snowphase 1"`), which `snowman.gd` has to match exactly.
 
-**B4 — Frogoblin carries a broken dead node.** Its `Jackphase3` node targets
+**B4 — Frogoblin carries a broken dead node.** **[DONE]** Its `Jackphase3` node targets
 `"Jackphase1"`, which doesn't exist on the Frogoblin. Unreachable today, a crash
 the moment it isn't.
 
-**B5 — Enemy death is behind a fragile node lookup.**
+**B5 — Enemy death is behind a fragile node lookup.** **[DONE]**
 ```gdscript
 func _process(_delta):
     $ProgressBar2.value = health
@@ -134,13 +139,35 @@ a game that ships 54MB of loud audio, a volume slider is not optional.
 
 ### Serious
 
-**S1 — Bullets have no lifetime cap.** The only despawn path is
-`VisibleOnScreenEnabler2D.screen_exited`. Any bullet that stays on screen lives
-forever. With five bosses firing ~70 bullets/sec combined, this is the first
-thing that will tank framerate on a web export or a low-end laptop. Add a hard
-lifetime timer as a floor.
+**S1 — Bullets have no lifetime cap.** **[DONE]** The only despawn path was
+`VisibleOnScreenEnabler2D.screen_exited`.
 
-**S2 — The title screen leaks a whole boss room.** `title.gd` instantiates
+Implementing the fix turned up a sharper problem than the one originally
+described. `VisibleOnScreenEnabler2D` does not merely notify — it sets
+`process_mode = DISABLED` on its parent while off-screen. So a bullet that
+spawned off-screen was frozen: it never moved, never entered the view, never
+*exited* it, and never expired. A lifetime timer alone could not have fixed
+that, because the enabler froze the timer too.
+
+The node is now a `VisibleOnScreenNotifier2D` (signals without freezing) plus a
+12-second lifetime backstop. Measured headless with screen culling unavailable —
+so the backstop is the *only* culling and these are worst-case ceilings — every
+difficulty now plateaus instead of growing without bound:
+
+| | on-screen bullets | worst-case total |
+|---|---|---|
+| Easy | ~65 | 223 |
+| Normal | ~78 | 341 |
+| Hard | ~86 | 411 |
+| Lunatic | ~120 | 692 |
+| Psychosis | ~253 | 1647 |
+
+One correction to the original analysis: the "790 live bullets after 20s" figure
+quoted in earlier drafts was inflated by this same freezing behaviour under
+headless. The underlying finding — no lifetime cap — was correct, but the number
+was not a real on-screen count.
+
+**S2 — The title screen leaks a whole boss room.** **[DONE]** `title.gd` instantiates
 `boss_room.tscn` **twice** at script load (`boss_room` and `simultaneous_scene`)
 and only ever adds one to the tree. Verified: one boss_room is 118 nodes, so
 **118 nodes leak permanently** every time the title screen loads. `simultaneous_scene`
@@ -169,10 +196,12 @@ and you have friendly fire.
 level 20 the fire-rate timer is ~0.002s — the player alone spawns a bullet every
 frame. Clamp it.
 
-**S7 — Repo weight.** `.git` is 127MB; `builds/` is 608MB of committed `.exe`/`.pck`
-files across 8 historical builds. `sounds/katsuboy_nightcore.wav` is **25MB and
-completely unreferenced**. All WAVs import at `compress/mode=0` (uncompressed PCM).
-54MB of assets for a 648×400 pixel game.
+**S7 — Repo weight.** **[DONE, except history]** `builds/` is untracked and
+gitignored, the unused assets are gone (including the 25MB unreferenced
+`katsuboy_nightcore.wav`), and every WAV now imports as QOA. Tracked assets went
+from 54MB to 24MB and the exported pck from 26MB to 11MB. The 127MB `.git` still
+carries the old binaries in history; rewriting that can wait until the clone
+size actually bites.
 
 ### Cleanup
 
@@ -190,7 +219,7 @@ completely unreferenced**. All WAVs import at `compress/mode=0` (uncompressed PC
 
 ## 4. Path forward
 
-### Phase 0 — Stop the bleeding (half a day)
+### Phase 0 — Stop the bleeding (half a day) — **DONE**
 
 1. Delete `simultaneous_scene` from `title.gd`. (S2)
 2. Add a lifetime `Timer` to `bullet.tscn` as a despawn floor. (S1)
@@ -202,7 +231,7 @@ completely unreferenced**. All WAVs import at `compress/mode=0` (uncompressed PC
    to `.ogg`. This alone should take the export from ~26MB to a few MB.
 6. Add `README.md`, `LICENSE`, and `.gitattributes`.
 
-### Phase 1 — Make the bosses data-driven (1–2 days)
+### Phase 1 — Make the bosses data-driven (1–2 days) — **DONE**
 
 This kills the entire class of bug that caused the regression. Replace the eleven
 one-off phase scripts with **one** `BossPhase.gd`:
@@ -267,12 +296,10 @@ This is the work that converts a tech demo into something shippable.
 3. **A death screen** instead of a silent `reload_current_scene()`. Retry / quit.
 4. **A pause menu** on Esc, with master/music/SFX volume sliders. `pause.wav`
    is sitting right there. Esc must stop being an instant-quit.
-5. **Move the difficulty modes in-game.** You already built `kb-alpha`,
-   `-hard`, `-lunatic` and `-psychosis` as *four separate executables*. That's
-   four things to build, upload and support forever. Make difficulty a data
-   table (HP multiplier, fire-rate multiplier, bullet-speed multiplier) chosen
-   from the title screen. Four builds collapse into one, and the psychosis mode
-   becomes a selling point instead of a separate download.
+5. ~~**Move the difficulty modes in-game.**~~ **[DONE]** `scripts/Difficulty.gd`
+   holds the roster and tuning for all five modes and the title screen picks one.
+   Psychosis still spawns the phase-offset Spaghetti clones the original
+   psychosis build used. Four executables collapsed into one.
 6. **Replace the debug-label state machine** (S3) with a real `status: Status`
    enum on the Player, and give status effects proper stacking rules (S4).
 7. **Give bullets a `faction` field** so friendly fire is impossible by
@@ -296,10 +323,17 @@ arcade game. Don't add a sixth before shipping.
 
 ### Phase 4 — Ship (2–3 days)
 
-1. **Restore the Web export.** It existed until `3d1113d` and got deleted. itch.io
-   is the natural home for this game and a browser build is the difference between
-   50 plays and 5. Fix the preset path, and confirm S1/S7 are done first — web is
-   where the bullet count and the 54MB of PCM audio will actually hurt.
+1. ~~**Restore the Web export.**~~ **[DONE]** The black screen was
+   `variant/thread_support=true`: threads need `SharedArrayBuffer`, which needs
+   cross-origin isolation headers the host must send, and without them the canvas
+   never initialises. Threads are now off, `vram_texture_compression/for_desktop`
+   is off (pointless for pixel art), the stale `bulletweb/` path is replaced by
+   `builds/web/`, and the web renderer is pinned to `gl_compatibility` explicitly
+   since Forward+ is Vulkan-only.
+
+   Verified: exports clean, and loads in Chromium with WebGL 2.0 and zero page
+   errors. Title menu, difficulty selection and combat all confirmed working in
+   the browser. Output is 53MB (42MB wasm + 11MB pck).
 2. **CI**: a GitHub Action that runs `godot --headless --import` and exports Web +
    Windows on tag. The headless import is also a free smoke test — it catches
    broken resource references before you ship them.

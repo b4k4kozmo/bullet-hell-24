@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Bgm="*res://bgm.tscn"
+Difficulty="*res://scripts/Difficulty.gd"
 
 [display]
 
@@ -93,4 +94,6 @@ block={
 
 [rendering]
 
+renderer/rendering_method="forward_plus"
+renderer/rendering_method.web="gl_compatibility"
 textures/canvas_textures/default_texture_filter=0

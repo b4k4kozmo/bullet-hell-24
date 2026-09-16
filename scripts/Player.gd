@@ -27,18 +27,26 @@ var dexterity = 7
 var health = max_hp:
 	#updates health bar
 	set(value):
-		progress_bar.max_value = max_hp
 		health = value
-		progress_bar.value = value
+		# The setter can fire before @onready resolves the bar.
+		if progress_bar:
+			progress_bar.max_value = max_hp
+			progress_bar.value = value
 
 var shuriken_count = max_ammo:
 	set(value):
-		ammo_bar.max_value = max_ammo
 		shuriken_count = value
-		ammo_bar.value = value
+		if ammo_bar:
+			ammo_bar.max_value = max_ammo
+			ammo_bar.value = value
 
 func _ready():
 	$HitboxDisplay.hide()
+	# Sync the bars once, since the setters skip them before @onready resolves.
+	progress_bar.max_value = max_hp
+	progress_bar.value = health
+	ammo_bar.max_value = max_ammo
+	ammo_bar.value = shuriken_count
 func get_vector(angle):
 	theta = angle + alpha
 	return Vector2(cos(theta),sin(theta))
