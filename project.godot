@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Bgm="*res://bgm.tscn"
 Difficulty="*res://scripts/Difficulty.gd"
+Run="*res://scripts/Run.gd"
 
 [display]
 

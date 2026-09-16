@@ -15,7 +15,7 @@ func _ready() -> void:
 
 
 func _start_run(id: int) -> void:
-	Difficulty.select(id)
+	Run.start(id)
 	Bgm.stream = load("res://sounds/KatsuBoySong.wav")
 	Bgm.play()
 	get_tree().change_scene_to_file("res://boss_room.tscn")

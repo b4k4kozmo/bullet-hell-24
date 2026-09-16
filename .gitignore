@@ -7,3 +7,5 @@ export/
 # OS cruft
 .DS_Store
 Thumbs.db
+# scratch probe scenes
+.probe/

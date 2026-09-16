@@ -97,6 +97,13 @@ func set_status(incoming: int) -> void:
 			$AudioStreamPlayer2D.play()
 
 
+## Starts this boss's attack cycle immediately.
+func engage() -> void:
+	var fsm := find_child("FiniteStateMachine", false, false) as BossFSM
+	if fsm:
+		fsm.engage()
+
+
 func get_vector(angle: float) -> Vector2:
 	theta = angle + alpha
 	return Vector2(cos(theta), sin(theta))
@@ -110,11 +117,21 @@ func shoot(angle: float) -> void:
 	bullet.direction = get_vector(angle)
 	bullet.enemy_bullet = true
 	bullet.set_property(bullet_type)
-	var host := get_tree().current_scene
+	var host := _bullet_host()
 	if host:
 		host.call_deferred("add_child", bullet)
 	else:
 		bullet.queue_free()
+
+
+## Bullets live under a dedicated container when the scene provides one, so the
+## arena can pause and clear them without touching the rest of the room.
+func _bullet_host() -> Node:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return null
+	var host := scene.get_node_or_null("Bullets")
+	return host if host else scene
 
 
 func _on_speed_timeout() -> void:

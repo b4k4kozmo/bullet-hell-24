@@ -32,6 +32,21 @@ func change_to(state: State) -> void:
 	previous_state = leaving
 
 
+## Forces the machine out of Idle into its opening phase.
+##
+## Idle waits for the player to wander into a detection radius, which suited a
+## single room with bosses scattered around it. A stage is an explicit fight, so
+## the arena starts it instead - otherwise a stage whose boss happens to sit
+## further than the detection radius from the player spawn never begins.
+func engage() -> void:
+	if current_state is BossPhase:
+		return
+	var announce := get_node_or_null("AudioStreamPlayer2D")
+	if announce:
+		announce.play()
+	change_to_path(initial_phase)
+
+
 ## Resolves a NodePath relative to this machine and enters it.
 func change_to_path(path: NodePath) -> void:
 	if path.is_empty():

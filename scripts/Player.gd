@@ -1,8 +1,12 @@
 extends CharacterBody2D
 
+## Emitted once when HP hits zero. Arena owns what happens next.
+signal died
+
 var speed = 250
 
 var cantWalk = false
+var _dead = false
 @onready var debug = $Debug
 @onready var progress_bar = $ProgressBar2
 @onready var ammo_bar = $ProgressBar3
@@ -71,7 +75,17 @@ func shoot(angle):
 			return
 	
 	bullet.player_bullet = true
-	get_tree().current_scene.call_deferred("add_child", bullet)
+	_bullet_host().call_deferred("add_child", bullet)
+
+
+## Bullets live under a dedicated container when the scene provides one, so the
+## arena can pause and clear them without touching the rest of the room.
+func _bullet_host() -> Node:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return self
+	var host := scene.get_node_or_null("Bullets")
+	return host if host else scene
 	
 
 func _physics_process(_delta):
@@ -88,9 +102,10 @@ func _physics_process(_delta):
 		if not cantWalk:
 			speed = 250
 		$HitboxDisplay.hide()
-	if health <= 0:
-		restart()
+	if health <= 0 and not _dead:
+		_dead = true
 		debug.text = "dead"
+		died.emit()
 	velocity = Input.get_vector("move_left","move_right","move_up","move_down") * speed
 	
 	#handle level ups
@@ -180,9 +195,8 @@ func stun():
 	debug.text = "debug"
 
 func restart():
+	get_tree().paused = false
 	get_tree().reload_current_scene()
-	Bgm.stream = load("res://sounds/Silent Way.mp3")
-	Bgm.play()
 
 
 func _on_speed_timeout():

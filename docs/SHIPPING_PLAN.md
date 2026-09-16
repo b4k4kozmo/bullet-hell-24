@@ -3,10 +3,10 @@
 Analysis date: 2026-09-16 · HEAD at time of writing: `a7363a9` "added frogoblins"
 Engine: Godot 4.4 (Forward+) · ~780 lines of GDScript · 41 commits, 2024-05-01 → 2025-05-27
 
-> **Status:** Phase 0, Phase 1 and the difficulty ladder are implemented, and the
-> Web export is fixed and verified running in a browser. Items are marked
-> **[DONE]** below as they land. The headline gap is still **B1 — no win
-> condition**.
+> **Status:** Phases 0, 1 and 3 are implemented, the difficulty ladder is in,
+> the run now has a win condition, and the Web export is fixed and verified in a
+> browser. Items are marked **[DONE]** below as they land. What is left is the
+> pause menu (B6) and the state-in-a-label cleanup (S3/S4/S5).
 
 Every claim below was verified by importing the project in Godot 4.4 headless and
 running probes against the real scene tree, not by reading code alone.
@@ -101,10 +101,11 @@ this instance.
 
 ### Ship blockers
 
-**B1 — There is no win condition.** Verified at runtime: set all five bosses to
-0 HP and nothing happens. No win screen, no scene change, no credits, no score.
-The game cannot be completed. This is the single biggest gap between "tech demo"
-and "game".
+**B1 — There is no win condition.** **[DONE]** A run is now five stages
+(`Levels.STAGES`), tracked by the `Run` autoload. Clearing a stage shows STAGE
+CLEAR and advances; dying shows GAME OVER and retries the stage you died on,
+keeping progress; clearing the last stage shows ALL CLEAR with the difficulty
+and run time. Verified at runtime for all three paths.
 
 **B2 — Kamijack is missing phase 2.** **[DONE]** `kamijack.tscn`'s `Jackphase2` node runs
 `Snowphase1.gd`, which tries to transition to a node named `"Snowphase 1"` that
@@ -289,11 +290,11 @@ goes (B4). Rename `"Snowphase 1"` → `"Snowphase1"`.
 
 This is the work that converts a tech demo into something shippable.
 
-1. **An `Arena` / run controller.** Owns the boss list, tracks how many are
-   alive, and fires `run_cleared` when the last one dies. This is B1.
-2. **A win screen** — time, score, level reached, damage taken. `fanfare.wav`
-   is already in the project and unused for this.
-3. **A death screen** instead of a silent `reload_current_scene()`. Retry / quit.
+1. ~~**An `Arena` / run controller.**~~ **[DONE]**
+2. ~~**A win screen**~~ **[DONE]** — ALL CLEAR with difficulty and run time,
+   using `fanfare.wav`. Score and damage-taken are still not tracked.
+3. ~~**A death screen**~~ **[DONE]** — GAME OVER, retry the stage or return to
+   the title.
 4. **A pause menu** on Esc, with master/music/SFX volume sliders. `pause.wav`
    is sitting right there. Esc must stop being an instant-quit.
 5. ~~**Move the difficulty modes in-game.**~~ **[DONE]** `scripts/Difficulty.gd`
@@ -307,19 +308,26 @@ This is the work that converts a tech demo into something shippable.
 8. **Clamp fire-rate scaling** (S6) and fix the `shuriken_count < 100` regen cap
    that contradicts `max_ammo = 255`.
 
-### Phase 3 — Structure the content (1 week)
+### Phase 3 — Structure the content — **DONE (boss rush)**
 
-Right now all five bosses are in one room simultaneously, which is why the game
-has no arc. Two options:
+Five sequential stages, each with a short between-fight beat, ending on the
+original all-at-once room as the finale. Difficulty no longer gates bosses, so
+every player sees every boss on every difficulty.
 
-- **Boss rush (recommended).** One boss per room, sequential, with a short
-  between-fight beat. You already have distinct music per boss wired up. This is
-  the smaller change and it makes the existing content feel intentional.
-- **Survival/horde.** Keep the single arena, spawn bosses in waves, score by
-  time survived. Leans into the chaos you already have.
+One change fell out of this that is worth knowing about. Bosses used to start
+fighting when the player wandered into a 195px detection radius, which suited a
+single room with bosses scattered around it. With one boss per stage placed
+centrally and the player spawning bottom-left, that radius was never crossed and
+the fight simply never began. `BossFSM.engage()` now starts a stage's bosses
+explicitly after a short beat, so stage layout no longer has to respect
+detection geometry.
 
-Either way: the five bosses you have are enough content for a 10–15 minute
-arcade game. Don't add a sixth before shipping.
+**Still open — run length.** The shuriken spiral steps ~172° between shots, so
+at any given moment only a small fraction of the player's fire is pointed at the
+boss. Combined with 250–999 boss HP this makes fights long, and a five-stage run
+correspondingly long. Worth measuring against the run you actually want before
+release; the knobs are `Boss.max_health`, the player's `power`/`dexterity`, and
+the player's `alpha` in `player.tscn`.
 
 ### Phase 4 — Ship (2–3 days)
 

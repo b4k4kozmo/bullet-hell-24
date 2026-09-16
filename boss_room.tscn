@@ -1,6 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bhryb2orfoclh"]
+[gd_scene load_steps=8 format=3 uid="uid://bhryb2orfoclh"]
 
 [ext_resource type="Script" path="res://scripts/Arena.gd" id="arena"]
+[ext_resource type="FontFile" uid="uid://c720lro2tedqy" path="res://fonts/x12y16pxMaruMonica.ttf" id="font"]
+[ext_resource type="AudioStream" uid="uid://dtor7m7cws2s4" path="res://sounds/fanfare.wav" id="fanfare"]
 
 [ext_resource type="PackedScene" uid="uid://4cqla6d7d6hd" path="res://player.tscn" id="2_7vtuo"]
 [ext_resource type="Texture2D" uid="uid://brj8q14wfmea5" path="res://sprites/IMG_4034.JPG" id="3_phblx"]
@@ -11,11 +13,17 @@
 size = Vector2(1.00464, 1.27219)
 
 [node name="BossRoom" type="Node2D"]
+process_mode = 3
 script = ExtResource("arena")
 
 [node name="Bosses" type="Node2D" parent="."]
+process_mode = 1
+
+[node name="Bullets" type="Node2D" parent="."]
+process_mode = 1
 
 [node name="Player" parent="." instance=ExtResource("2_7vtuo")]
+process_mode = 1
 position = Vector2(38, 366)
 collision_layer = 3
 collision_mask = 3
@@ -105,3 +113,72 @@ visibility_layer = 2
 position = Vector2(-0.000772804, 0.00144196)
 shape = SubResource("RectangleShape2D_bc61q")
 
+[node name="Fanfare" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("fanfare")
+volume_db = -4.0
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="StageTag" type="Label" parent="HUD"]
+unique_name_in_owner = true
+offset_left = 6.0
+offset_top = 3.0
+offset_right = 320.0
+offset_bottom = 20.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.65)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.8)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("font")
+theme_override_font_sizes/font_size = 14
+text = "STAGE"
+
+[node name="Overlay" type="ColorRect" parent="HUD"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.03, 0.07, 0.72)
+
+[node name="Box" type="VBoxContainer" parent="HUD/Overlay"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -42.0
+offset_right = 160.0
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="Banner" type="Label" parent="HUD/Overlay/Box"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.76, 0.36, 0.69, 1)
+theme_override_fonts/font = ExtResource("font")
+theme_override_font_sizes/font_size = 34
+text = "STAGE CLEAR"
+horizontal_alignment = 1
+
+[node name="Sub" type="Label" parent="HUD/Overlay/Box"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("font")
+theme_override_font_sizes/font_size = 15
+text = "sub"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Hint" type="Label" parent="HUD/Overlay/Box"]
+unique_name_in_owner = true
+layout_mode = 2
+modulate = Color(1, 1, 1, 0.55)
+theme_override_fonts/font = ExtResource("font")
+theme_override_font_sizes/font_size = 12
+text = "hint"
+horizontal_alignment = 1
