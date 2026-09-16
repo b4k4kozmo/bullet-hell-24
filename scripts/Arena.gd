@@ -148,6 +148,7 @@ func _show_stage_clear() -> void:
 	if Run.is_final_stage():
 		_phase = Phase.ALL_CLEAR
 		$Fanfare.play()
+		Run.report(true, _player_level())
 		_set_overlay("ALL CLEAR", "%s  -  %s" % [Difficulty.display_name(), Run.elapsed_text()],
 			"SPACE to return to the title")
 	else:
@@ -178,10 +179,19 @@ func _reload() -> void:
 
 
 func _to_title() -> void:
+	# Walking away from a game over ends the run, so it is worth posting.
+	# Choosing "retry stage" instead keeps the run - and its clock - going.
+	if _phase == Phase.GAME_OVER:
+		Run.report(false, _player_level())
 	get_tree().paused = false
 	Bgm.stream = load("res://sounds/KatsuBoySong.wav")
 	Bgm.play()
 	get_tree().change_scene_to_file("res://title.tscn")
+
+
+func _player_level() -> int:
+	var player := get_node_or_null("Player")
+	return player.player_level if player else 1
 
 
 func _freeze() -> void:
