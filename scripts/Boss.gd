@@ -64,10 +64,13 @@ func set_status(incoming: int) -> void:
 	var player := _player()
 	if player == null or _dying:
 		return
-	# The player's status-effect state currently lives in the text of its Debug
-	# label; "debug" means no effect is active. Preserved as-is here - moving it
-	# to a real enum is tracked in docs/SHIPPING_PLAN.md (S3).
-	var unhindered: bool = player.debug.text == "debug"
+	# The player's status-effect state lives in the text of its Debug label;
+	# "debug" means no effect is active. Compared case-insensitively because the
+	# label starts out as "Debug" and is only rewritten as "debug" once an effect
+	# has worn off - so an exact match counted every fresh run as hindered and
+	# quietly docked the player's damage. Moving this to a real enum is tracked
+	# in docs/SHIPPING_PLAN.md (S3).
+	var unhindered: bool = player.debug.text.to_lower() == "debug"
 
 	match incoming:
 		4:
@@ -88,12 +91,17 @@ func set_status(incoming: int) -> void:
 		6:
 			if player.shuriken_count < 100:
 				player.shuriken_count += 1
-			if player.health < 100:
+			# Full health hits harder. This used to read `< 100` / `elif == 100`
+			# with no else, so the sword dealt nothing at all above 100 HP - and
+			# levelling raises max_hp past 100 and heals toward it, so levelling
+			# up silently disabled the player's main weapon. Compared against
+			# max_hp now, which is what the two branches were reaching for.
+			if player.health >= player.max_hp:
+				health -= int(player.power * 1.5)
+			else:
 				health -= player.power
 				if unhindered:
 					player.health += .1
-			elif player.health == 100:
-				health -= player.power * 1.5
 			$AudioStreamPlayer2D.play()
 
 

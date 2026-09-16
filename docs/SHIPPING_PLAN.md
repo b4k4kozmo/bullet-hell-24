@@ -138,6 +138,27 @@ exactly `Player` hits this.
 is never used. Esc calls `get_tree().quit()` instantly with no confirmation. For
 a game that ships 54MB of loud audio, a volume slider is not optional.
 
+**B7 — The sword dealt no damage above 100 HP.** **[DONE]** Found while
+measuring run length. The damage branch read:
+
+```gdscript
+if player.health < 100:      health -= player.power
+elif player.health == 100:   health -= player.power * 1.5
+```
+
+with no `else`. Levelling raises `max_hp` past 100 (`max_hp += player_level`)
+and heals toward it, so **levelling up silently disabled the player's main
+weapon**. A test run reached level 12 and dealt zero. The comparison is against
+`max_hp` now, which is what the two branches were reaching for: full health hits
+harder, anything less hits normally.
+
+**B8 — Every run started with the player counted as "hindered".** **[DONE]**
+The status sentinel is the text of the Debug label and the check was
+`text == "debug"`, but the label starts out as `"Debug"`. So until a status
+effect had worn off once, the player silently dealt reduced damage (5 instead of
+7 at level 1). Compared case-insensitively now. Both of these are pre-existing,
+and together they are why bosses felt unkillable.
+
 ### Serious
 
 **S1 — Bullets have no lifetime cap.** **[DONE]** The only despawn path was
@@ -322,12 +343,20 @@ the fight simply never began. `BossFSM.engage()` now starts a stage's bosses
 explicitly after a short beat, so stage layout no longer has to respect
 detection geometry.
 
-**Still open — run length.** The shuriken spiral steps ~172° between shots, so
-at any given moment only a small fraction of the player's fire is pointed at the
-boss. Combined with 250–999 boss HP this makes fights long, and a five-stage run
-correspondingly long. Worth measuring against the run you actually want before
-release; the knobs are `Boss.max_health`, the player's `power`/`dexterity`, and
-the player's `alpha` in `player.tscn`.
+**Run length.** Measured after the damage fixes below, with the player parked
+point-blank, always at full health, using the sword:
+
+| Stage | Bosses | Total HP | Clear time |
+|---|---|---|---|
+| FROGOBLIN | 1 | 250 | 4.0s |
+| SNOWMAN | 1 | 444 | 9.4s |
+| THE TWINS | 2 | 888 | 15.7s |
+| SPAGHETTI | 1 | 999 | 21.4s |
+| ALL AT ONCE | 5 | 2581 | 31.4s |
+
+About 82 seconds of pure damage for a perfect Normal run. A real player dodging
+will take several times that, which puts a run in sensible arcade territory. The
+curve rises monotonically, so the stage order works as a difficulty ramp.
 
 ### Phase 4 — Ship (2–3 days)
 
